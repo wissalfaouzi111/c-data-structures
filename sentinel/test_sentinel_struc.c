@@ -24,7 +24,6 @@ static void test_find(void){
   for (size_t i =0;i<SET__SIZE;i++ ){
     s2.s[i]=i;
   }
-  s2.s[SET__SIZE]=-1;
   assert(find(s2.s,SET__SIZE+1)==SET__SIZE);
   //
   struct set s3={{-1}};
@@ -35,24 +34,27 @@ static void test_find(void){
 static void test_shift_right(void){
   printf("%s\n", __func__);
   struct set s1={{1,3,4,6,10,-1}};
+  printf("Avant:");
   set__print(&s1);
-  shift_right(s1.s,5);
+  shift_right(s1.s,2);
+  printf("Après:");
   set__print(&s1);  
   printf("test_valide:)\n\n");   
 }
 
 static void test_shift_left(void){
   printf("%s\n", __func__);
-  printf("%s\n", __func__);
   struct set s1={{1,3,4,6,10,-1}};
+  printf("Avant:");
   set__print(&s1);
   shift_left(s1.s,2);
+  printf("Après:"); 
   set__print(&s1); 
   printf("test_valide:)\n\n");   
 }
 static void test_set__find(void){
   printf("%s\n", __func__);
-  struct set s1={{1,3,4,6,10,-1}};
+  struct set s1={{2,3,8,9,-1}};
   assert(set__find(&s1,3)==1);
   assert(set__find(&s1,11)==0);
   printf("test_valide:)\n\n");   
@@ -88,6 +90,34 @@ static void test_set__is_empty(void){
   set__print(&s2);
   printf("s2 est vide = %d\n",set__is_empty(&s2));
   printf("test_valide:)\n\n");    
+}
+
+static void test_set__add(void){
+  printf("%s\n", __func__);
+  struct set s1={{2,3,8,9,-1}};
+  assert(set__add(&s1,3)==-1);
+  assert(set__add(&s1,4)==0);
+  assert(set__add(&s1,10)==0);
+  assert(set__add(&s1,-2)==-1);
+
+  struct set s2={{}};
+  for (size_t i=0;i<SET__SIZE;i++){
+    s2.s[i]=i;
+  }
+  assert(set__add(&s2,SET__SIZE)==-1);  
+  printf("test_valide:)\n\n");    
+}
+
+static void test_set__remove(void){
+  printf("%s\n",__func__);
+  struct set s1={{2,3,8,9,-1}};
+  assert(set__remove(&s1,1)==-1);
+  assert(set__remove(&s1,3)==0);
+  assert(set__remove(&s1,-2)==-1);
+
+  struct set s2={{-1}};
+  assert(set__remove(&s2,1)==-1);  
+  printf("test_valide:)\n\n");     
 }
 
 /*static void test_set__remove_with_shift (void) {
@@ -129,5 +159,7 @@ int main () {
   test_set_empty();
   test_set__size();
   test_set__is_empty();
+  test_set__add();
+  test_set__remove();
   return 0;
 }

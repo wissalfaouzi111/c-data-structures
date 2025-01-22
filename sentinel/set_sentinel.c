@@ -19,7 +19,7 @@ void set__print(const struct set* se){
 size_t find(int const s[], int c){ 
     size_t idx;
     for (idx=0;(idx<SET__SIZE) && (s[idx] != SET__BOUND) ;idx++){
-        if( s[idx]>= c){
+        if( s[idx] >= c){
             return idx;
         }
     }
@@ -28,7 +28,7 @@ size_t find(int const s[], int c){
 // Returns non-zero if c belongs to se, 0 otherwise
 int set__find(const struct set *se, int c){
     size_t IDX=find(se->s,c);
-    return (IDX<SET__SIZE) && (se->s[IDX] >=0);
+    return (IDX<SET__SIZE) && (se->s[IDX] ==c);
 }
 
 // moves all elements in s starting from position begin and up to
@@ -50,8 +50,17 @@ void shift_right(int s[], size_t begin){
 // moves all elements in s starting from position begin and up to
 // SET__BOUND included, one position to the left. 
 void shift_left(int s[], size_t begin){
-    for(size_t idx=begin;(idx<SET__SIZE) && (s[idx]!=-2);idx++){
+    size_t idx;
+    for(idx=begin;(idx<SET__SIZE) && (s[idx]!=SET__BOUND);idx++){
         s[idx]=s[idx+1];
+    }
+    if (idx+1 < SET__SIZE) {
+        s[idx] = s[idx+1]; 
+        idx++;
+    }
+    // Marquer la fin logique à la nouvelle position
+    if (idx< SET__SIZE) {
+        s[idx] =-2; // Remplit la dernière case avec une valeur par défaut (0 ici)
     }
 }
 
@@ -81,13 +90,27 @@ int set__is_empty(const struct set* se){
 // Returns 0 if c has been added to se, a negative value otherwise
 // NB: se should not be modified if c cannot be added to se
 int set__add(struct set *se, int c){
-    if (c<0 || set__find(se,c)){
+    if (c<0 || set__find(se,c) || set__size(se)>=SET__SIZE){
         return -1;
     }
     else{
         size_t idx=find(se->s,c);
         shift_right(se->s,idx);
         se->s[idx]=c;
-        return 1;
+        return 0;
+    }
+}
+
+// Removes c from se
+// Returns 0 if c has been removed from se, a negative value otherwise
+// NB: se should not be modified if c cannot be removed from se
+int set__remove(struct set *se, int c){
+    if (c<0 || !set__find(se,c) || set__is_empty(se)){
+        return -1;
+    }
+    else{
+        size_t idx=find(se->s,c);  
+        shift_left(se->s,idx);
+        return 0;  
     }
 }
