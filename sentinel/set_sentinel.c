@@ -73,8 +73,9 @@ struct set set__empty(void){
 
 // Returns the number of elements in se
 size_t set__size(const struct set *se){
-    int c=0;
-    for (size_t i=0;(i<SET__SIZE) && (se->s[i] != SET__BOUND);i++){
+    size_t c=0;
+    size_t i;
+    for (i=0;(i<SET__SIZE) && (se->s[i] != SET__BOUND);i++){
         c++;
     }
     return c;
@@ -90,7 +91,7 @@ int set__is_empty(const struct set* se){
 // Returns 0 if c has been added to se, a negative value otherwise
 // NB: se should not be modified if c cannot be added to se
 int set__add(struct set *se, int c){
-    if (c<0 || set__find(se,c) || set__size(se)>=SET__SIZE){
+    if (c<0 || set__find(se,c) || set__size(se)>= SET__SIZE-1){
         return -1;
     }
     else{
