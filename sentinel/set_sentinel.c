@@ -17,7 +17,7 @@ void set__print(const struct set* se){
 // returns the first position p in s such that s[p]>=c if any, or
 // the position of SET__BOUND otherwise.
 size_t find(int const s[], int c){ 
-    size_t idx;
+    size_t idx=0;
     for (idx=0;(idx<SET__SIZE) && (s[idx] != SET__BOUND) ;idx++){
         if( s[idx] >= c){
             return idx;
@@ -100,6 +100,8 @@ int set__add(struct set *se, int c){
         return 0;
     }
 }
+
+
 
 // Removes c from se
 // Returns 0 if c has been removed from se, a negative value otherwise
