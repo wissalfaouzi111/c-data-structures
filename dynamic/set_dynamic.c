@@ -11,6 +11,14 @@ void set__print(const struct set* se){
     printf("}  }\n");
 }
 
+// Return a struct set representing the empty set
+struct set set__empty(void){
+    struct set se;
+    se.size=0;
+    se.capacity=0;
+    se.s=NULL;
+    return se;
+}
 
 /*void s_D(struct set se){
     struct set* se=malloc()
