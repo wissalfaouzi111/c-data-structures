@@ -26,12 +26,25 @@ static void test_set__is_empty(void){
   printf("s2 est %s\n",set__is_empty(&s2) ? "vide" : "non vide");
   printf("test_valide:)\n\n");    
 }
-/*static void test_set__add(void){
-    
-}*/
+
+static void test_set__size(void){
+  printf("%s\n", __func__);
+  int s[]={1,2,3,4,5};
+  struct set s1={s,8,4};
+  set__print(&s1);
+  printf("size: %ld\n",set__size(&s1));
+
+  struct set s3=set__empty();
+  set__print(&s3);
+  printf("size: %ld\n",set__size(&s3));
+  printf("test_valide:)\n\n");    
+}
+
+
 
 int main(){
     test_set__print();
     test_set_empty();
     test_set__is_empty();
+    test_set__size();
 }
