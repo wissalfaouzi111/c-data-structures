@@ -20,6 +20,12 @@ struct set set__empty(void){
     return se;
 }
 
+// Returns non-zero if se is empty, 0 otherwise
+int set__is_empty(const struct set* se){
+    return (se->size == 0 && se->capacity == 0 && se->s ==NULL);
+}
+
+
 /*void s_D(struct set se){
     struct set* se=malloc()
     

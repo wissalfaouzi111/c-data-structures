@@ -85,10 +85,10 @@ static void test_set__is_empty(void){
   printf("%s\n", __func__);
   struct set s1={{2,3,8,9,-1}};
   set__print(&s1);
-  printf("s1 est vide = %d\n",set__is_empty(&s1));
-  struct set s2={{-1}};
+  printf("s1 est %s\n",set__is_empty(&s1) ? "vide" : "non vide");
+  struct set s2=set__empty();
   set__print(&s2);
-  printf("s2 est vide = %d\n",set__is_empty(&s2));
+  printf("s2 est %s\n",set__is_empty(&s2) ? "vide" : "non vide");
   printf("test_valide:)\n\n");    
 }
 
