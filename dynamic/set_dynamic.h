@@ -3,13 +3,11 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-
+#include "set.h"
 struct set {
     int *s;
     size_t capacity;
     size_t size;
 };
-
-void set__print(struct set* se);
 
 #endif

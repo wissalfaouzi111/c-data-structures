@@ -1,6 +1,6 @@
 #include "set_dynamic.h"
 
-void set__print(struct set* se){
+void set__print(const struct set* se){
     printf("{  .size = %ld, .capacity = %ld, .s = {",se->size,se->capacity);
     for (size_t i=0;i < se->size; i++){
         printf("%d",se->s[i]);
