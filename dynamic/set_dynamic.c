@@ -31,41 +31,28 @@ size_t set__size(const struct set *se){
 }
 
 
-/*// returns the first position p in s such that s[p]>=c if any
-size_t find(int const s[], int c){ 
-    size_t idx=0;
-    for (idx=0;(idx < se->size) ;idx++){
-        if( s[idx] >= c){
-            return idx;
+// returns the first position p in s such that s[p]>=c
+// or size if no such p exists
+size_t find(int const s[], size_t size, int c){
+    for (size_t i=0;i<size;i++){
+        if (s[i]>=c){
+            return i;
         }
     }
-    return idx++;
-}*/
+    return size;
+}
 
-// Returns non-zero if c belongs to se, 0 otherwise
-/*int set__find(const struct set *se, int c){
-    size_t IDX=find(se->s,c);
-    return (IDX<SET__SIZE) && (se->s[IDX] ==c);
-}*/
-
-// Adds c to se
-// Returns 0 if c has been added to se, a negative value otherwise
-// NB: se should not be modified if c cannot be added to se
-/*int set__add(struct set *se, int c){
-    if (c<0 || set__find(se,c) || set__size(se)>= SET__SIZE-1){
-        return -1;
+/*// moves elements in s[begin..end[ to s[begin+1..end+1[
+// assuming all indices are valid, s[begin] is left unchanged
+void shift_right(int s[], size_t begin, size_t end){
+    size_t k;
+    int cur =s[begin],next;
+    for (k=begin;k<end;k++){
+        next=s[k+1];
+        s[k+1]=cur;
+        cur = next;
     }
-}*/
-
-/*void s_D(struct set se){
-    struct set* se=malloc()
-    
-
-    if (se.capacity==0){
-        se.capacity=1;
+    if (k+1 < SET__SIZE){
+        s[k+1]=SET__BOUND;
     }
-    else if (se.capacity==se.size){
-        se.capacity*=2;
-    }
-
 }*/
