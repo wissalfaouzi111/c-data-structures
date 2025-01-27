@@ -95,13 +95,13 @@ int set__add(struct set *se, int c){
 // Returns 0 if c has been removed from se, a negative value otherwise
 // NB: se should not be modified if c cannot be removed from se
 int set__remove(struct set *se, int c){
-    if (!set__find(se,c) || c<0 || set__is_empty(se) || set__size(se)==0){
+    if (!set__find(se,c) || c<0 || set__size(se)==0){
         return -1;
     }
     else{
         size_t size=se->size;
         size_t idx=find(se->s,size,c);
-        shift_left(se->s,idx,size-1);
+        shift_left(se->s,idx,size);
         se->size--;
         if (se->capacity == 1){
             free(se->s);
