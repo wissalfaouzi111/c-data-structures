@@ -57,9 +57,6 @@ void shift_right(int s[], size_t begin, size_t end){
             s[k+1]=cur;
             cur = next;
         }
-        /*if (s[end+1]==0){
-            s[end+1]=next;*/
-        
     }
 }
 
