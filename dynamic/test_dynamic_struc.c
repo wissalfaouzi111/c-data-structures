@@ -98,6 +98,7 @@ static void test_set__find(void){
   s1.s[3]=9;
   assert(set__find(&s1,3)==1);
   assert(set__find(&s1,11)==0);
+  set__free(&s1);
   printf("test_valide:)\n\n");
 }
 
