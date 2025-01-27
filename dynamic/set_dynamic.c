@@ -71,39 +71,31 @@ void shift_left(int s[], size_t begin, size_t end){
 // NB: se should not be modified if c cannot be added to se
 int set__add(struct set *se, int c){
     size_t idx=find(se->s,se->size,c);
-    if (set__find(se,c) || c<0 || se==NULL){
+    if (set__find(se,c) || c<0 ){
         return -1;
     }
     if (set__is_empty(se)){
         se->capacity++;
         se->size++;
         se->s=malloc(se->capacity *sizeof(int));
-        if (se->s == NULL) {
-            return -1;
-        }
         se->s[0]=c;
         return 0;
     }
-    else{
-        if (se->capacity == se->size){
-            se->capacity*=2;
-            se->s=realloc(se->s,se->capacity * sizeof(int));   
-        }
-        if (se->s == NULL) {
-            return -1;
-        }
-        shift_right(se->s,idx,se->size);
-        se->s[idx]=c;
-        se->size++;
-        return 0;
+    if (se->capacity == se->size){
+        se->capacity*=2;
+        se->s=realloc(se->s,se->capacity * sizeof(int));   
     }
+    shift_right(se->s,idx,se->size);
+    se->s[idx]=c;
+    se->size++;
+    return 0;
 }
 
 // Removes c from se
 // Returns 0 if c has been removed from se, a negative value otherwise
 // NB: se should not be modified if c cannot be removed from se
 int set__remove(struct set *se, int c){
-    if (!set__find(se,c) || c<0 || set__is_empty(se)){
+    if (!set__find(se,c) || c<0 || set__is_empty(se) || set__size(se)==0){
         return -1;
     }
     else{
