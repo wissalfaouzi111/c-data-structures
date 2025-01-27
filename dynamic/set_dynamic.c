@@ -116,8 +116,8 @@ int set__remove(struct set *se, int c){
                 se->capacity /=2;
             }
             shift_left(se->s,idx,size);
-            se->s=realloc(se->s,se->capacity * sizeof(int));
             se->size--;
+            se->s=realloc(se->s,se->capacity * sizeof(int));
             return 0;
         }
 
