@@ -89,7 +89,7 @@ int set__add(struct set *se, int c){
             
         }
         se->s=realloc(se->s,se->capacity * sizeof(int));
-        shift_right(se->s,idx,se->size +1);
+        shift_right(se->s,idx,se->size);
         se->s[idx]=c;
         se->size++;
         return 0;
