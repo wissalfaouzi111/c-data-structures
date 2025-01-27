@@ -112,6 +112,7 @@ int set__remove(struct set *se, int c){
             se->capacity--;
             se->size--;
             free(se->s);
+            return 0;
         }
         else{
             if (se->capacity == se->size){
@@ -120,8 +121,14 @@ int set__remove(struct set *se, int c){
             se->s=realloc(se->s,se->capacity * sizeof(int));
             shift_left(se->s,idx,se->size);
             se->size--;
-            return 1;
+            return 0;
         }
 
     }
+}
+
+// Frees the dynamically allocated contents of the set se
+// Does *not* free the pointer se
+void set__free(struct set* se){
+    free(se->s);
 }
