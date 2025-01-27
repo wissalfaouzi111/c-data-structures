@@ -138,7 +138,24 @@ static void test_shift_right(void){
   printf("}\n");
   printf("test_valide:)\n\n");   
 }
-
+static void test_shift_left(void){
+  printf("%s\n", __func__);
+  //test_1
+  int s1[]={1,3,6,8,9};
+  printf("Avant:");
+  printf("{");
+  for (int i=0;i<5;i++){
+    printf("%d ",s1[i]);
+  }
+  printf("}\n");
+  shift_left(s1,2,5);
+  printf("Après:");
+  printf("{");
+  for (int i=0;i<4;i++){
+    printf("%d ",s1[i]);
+  }
+  printf("}\n\n");
+}
 static void test_set__add(void){
   printf("%s\n",__func__);
   struct set s1;
@@ -186,6 +203,7 @@ int main(){
     test_find();
     test_set__find();
     test_shift_right();
+    test_shift_left();
     test_set__add();
     test_set__remove();
 }

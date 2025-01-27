@@ -66,7 +66,7 @@ void shift_right(int s[], size_t begin, size_t end){
 // moves elements in s[begin..end[ tp [begin-1..end-1[
 // assuming all indices are valid, s[end-1] is left unchanged
 void shift_left(int s[], size_t begin, size_t end){
-    for (size_t i=begin;i<end;i++){
+    for (size_t i=begin;i<end-1;i++){
         s[i]=s[i+1];
     }
 }
