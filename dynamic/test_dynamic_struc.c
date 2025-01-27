@@ -112,7 +112,7 @@ static void test_shift_right(void){
     printf("%d ",s1[i]);
   }
   printf("}\n");
-  shift_right(s1,2,4);
+  shift_right(s1,2,5);
   printf("Après:");
   printf("{");
   for (int i=0;i<6;i++){
