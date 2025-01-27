@@ -106,7 +106,7 @@ int set__remove(struct set *se, int c){
     else{
         size_t size=se->size;
         size_t idx=find(se->s,size,c);
-        shift_left(se->s,idx,size);
+        shift_left(se->s,idx,size-1);
         se->size--;
         if (se->capacity == 1){
             free(se->s);
