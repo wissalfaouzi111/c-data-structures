@@ -132,7 +132,7 @@ static void test_shift_right(void){
   shift_right(s2,1,1);
   printf("Après:");
   printf("{");
-  for (int i=0;i<6;i++){
+  for (int i=0;i<5;i++){
     printf("%d ",s2[i]);
   }
   printf("}\n");
@@ -189,7 +189,7 @@ static void test_set__remove(void){
   s1.s[3]=9;
   printf("Avant:");
   set__print(&s1);
-  set__remove(&s1,3);
+  set__remove(&s1,9);
   printf("Après:");
   set__print(&s1);
   free(s1.s);
