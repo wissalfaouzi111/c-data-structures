@@ -118,8 +118,9 @@ int set__remove(struct set *se, int c){
         else{
             if (se->capacity == se->size){
                 se->capacity /=2;
+                se->s=realloc(se->s,se->capacity * sizeof(int));
             }
-            se->s=realloc(se->s,se->capacity * sizeof(int));
+            
             return 0;
         }
 
