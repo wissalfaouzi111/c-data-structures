@@ -41,18 +41,87 @@ size_t find(int const s[], size_t size, int c){
     }
     return size;
 }
-
-/*// moves elements in s[begin..end[ to s[begin+1..end+1[
+// Returns non-zero if c belongs to se, 0 otherwise
+int set__find(const struct set *se, int c){
+    size_t IDX=find(se->s,set__size(se), c);
+    return (se->s[IDX] ==c) && (IDX< se->size);
+}
+// moves elements in s[begin..end[ to s[begin+1..end+1[
 // assuming all indices are valid, s[begin] is left unchanged
 void shift_right(int s[], size_t begin, size_t end){
-    size_t k;
-    int cur =s[begin],next;
-    for (k=begin;k<end;k++){
-        next=s[k+1];
-        s[k+1]=cur;
-        cur = next;
+    if (end!=begin){
+        size_t k;
+        int cur =s[begin],next;
+        for (k=begin;(k<end+1);k++){
+            next=s[k+1];
+            s[k+1]=cur;
+            cur = next;
+        }
+        if (s[end+1]==0){
+            s[end+1]=next;
+        }
     }
-    if (k+1 < SET__SIZE){
-        s[k+1]=SET__BOUND;
+}
+
+// moves elements in s[begin..end[ tp [begin-1..end-1[
+// assuming all indices are valid, s[end-1] is left unchanged
+void shift_left(int s[], size_t begin, size_t end){
+    for (size_t i=begin;i<end;i++){
+        s[i]=s[i+1];
     }
-}*/
+}
+
+// Adds c to se
+// Returns 0 if c has been added to se, a negative value otherwise
+// NB: se should not be modified if c cannot be added to se
+int set__add(struct set *se, int c){
+    if (set__find(se,c) || c<0){
+        return -1;
+    }
+    if (set__is_empty(se)){
+        se->capacity++;
+        se->size++;
+        se->s=malloc(se->capacity *sizeof(int));
+        se->s[0]=c;
+        return 0;
+    }
+    else{
+        size_t idx=find(se->s,se->size,c);
+        if (se->capacity == se->size){
+            se->capacity*=2;
+            
+        }
+        se->s=realloc(se->s,se->capacity * sizeof(int));
+        shift_right(se->s,idx,se->size);
+        se->s[idx]=c;
+        se->size++;
+        return 0;
+    }
+}
+
+// Removes c from se
+// Returns 0 if c has been removed from se, a negative value otherwise
+// NB: se should not be modified if c cannot be removed from se
+int set__remove(struct set *se, int c){
+    if (!set__find(se,c) || c<0 || set__is_empty(se)){
+        return -1;
+    }
+    else{
+        size_t idx=find(se->s,se->size,c);
+        if (se->capacity == 1){
+            se->capacity--;
+            se->size--;
+            free(se->s);
+        }
+        else{
+            if (se->capacity == se->size){
+                se->capacity /=2;
+            }
+            se->s=realloc(se->s,se->capacity * sizeof(int));
+            shift_left(se->s,idx,se->size);
+            se->size--;
+            return 1;
+        }
+
+    }
+}

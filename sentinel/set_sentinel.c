@@ -58,9 +58,9 @@ void shift_left(int s[], size_t begin){
         s[idx] = s[idx+1]; 
         idx++;
     }
-    // Marquer la fin logique à la nouvelle position
+
     if (idx< SET__SIZE) {
-        s[idx] =-2; // Remplit la dernière case avec une valeur par défaut (0 ici)
+        s[idx] =-2; 
     }
 }
 
