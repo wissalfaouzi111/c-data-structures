@@ -78,15 +78,20 @@ int set__add(struct set *se, int c){
         se->capacity++;
         se->size++;
         se->s=malloc(se->capacity *sizeof(int));
+        if (se->s == NULL) {
+            return -1;
+        }
         se->s[0]=c;
         return 0;
     }
     else{
         if (se->capacity == se->size){
             se->capacity*=2;
-            
+            se->s=realloc(se->s,se->capacity * sizeof(int));   
         }
-        se->s=realloc(se->s,se->capacity * sizeof(int));
+        if (se->s == NULL) {
+            return -1;
+        }
         shift_right(se->s,idx,se->size);
         se->s[idx]=c;
         se->size++;
