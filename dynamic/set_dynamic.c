@@ -70,7 +70,8 @@ void shift_left(int s[], size_t begin, size_t end){
 // Returns 0 if c has been added to se, a negative value otherwise
 // NB: se should not be modified if c cannot be added to se
 int set__add(struct set *se, int c){
-    if (set__find(se,c) || c<0){
+    size_t idx=find(se->s,se->size,c);
+    if (set__find(se,c) || c<0 || se==NULL){
         return -1;
     }
     if (set__is_empty(se)){
@@ -81,7 +82,6 @@ int set__add(struct set *se, int c){
         return 0;
     }
     else{
-        size_t idx=find(se->s,se->size,c);
         if (se->capacity == se->size){
             se->capacity*=2;
             
