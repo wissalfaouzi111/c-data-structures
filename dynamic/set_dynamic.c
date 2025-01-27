@@ -49,14 +49,17 @@ int set__find(const struct set *se, int c){
 // moves elements in s[begin..end[ to s[begin+1..end+1[
 // assuming all indices are valid, s[begin] is left unchanged
 void shift_right(int s[], size_t begin, size_t end){
-    if (end!=begin){
-        size_t k;
+    if (end>begin){
+        /*size_t k;
         int cur =s[begin],next;
         for (k=begin;(k<end+1);k++){
             next=s[k+1];
             s[k+1]=cur;
             cur = next;
-        }
+        }*/
+       for (size_t i = end; i > begin; --i) {
+        s[i] = s[i - 1];
+       }
     }
 }
 
