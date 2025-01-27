@@ -106,6 +106,8 @@ int set__remove(struct set *se, int c){
     else{
         size_t size=se->size;
         size_t idx=find(se->s,size,c);
+        shift_left(se->s,idx,size);
+        se->size--;
         if (se->capacity == 1){
             free(se->s);
             *se=set__empty();
@@ -115,8 +117,6 @@ int set__remove(struct set *se, int c){
             if (se->capacity == size){
                 se->capacity /=2;
             }
-            shift_left(se->s,idx,size);
-            se->size--;
             se->s=realloc(se->s,se->capacity * sizeof(int));
             return 0;
         }
