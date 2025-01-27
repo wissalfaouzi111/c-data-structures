@@ -44,7 +44,7 @@ size_t find(int const s[], size_t size, int c){
 // Returns non-zero if c belongs to se, 0 otherwise
 int set__find(const struct set *se, int c){
     size_t IDX=find(se->s,set__size(se), c);
-    return (se->s[IDX] ==c) && (IDX< se->size);
+    return (IDX< se->size) && (se->s[IDX] ==c);
 }
 // moves elements in s[begin..end[ to s[begin+1..end+1[
 // assuming all indices are valid, s[begin] is left unchanged
