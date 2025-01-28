@@ -168,7 +168,7 @@ static void test_set__add(void){
   s1.s[3]=9;
   printf("Avant:");
   set__print(&s1);
-  set__add(&s1,4);
+  set__add(&s1,10);
   printf("Après:");
   set__print(&s1);
   //je dois implementer autres tests§§§§§§!!!!!!!!!!!!!!!!!!!(AJOUTER LE CAS D 'AJOUT A UN ENSEMBLE VIDE)

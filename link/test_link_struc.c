@@ -10,7 +10,7 @@
   e.data= __INT_MAX__;
   e.next=(struct lelement *) &e;
   assert(llm__is_end_mark(&e)==0);
-  /*struct lelement e1 ;
+  struct lelement e1 ;
   struct lelement next_e1 ;
   e1.data= 11;
   e1.next=&next_e1;
