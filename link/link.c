@@ -77,5 +77,6 @@ int lnk__add_after(struct link *l, struct lelement *after,struct lelement * add)
 		struct lelement *next_after=after->next;
 		after->next=add;
 		add->next=next_after;
+		return 1;
 	}
 }
