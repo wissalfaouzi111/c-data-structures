@@ -1,11 +1,11 @@
 SET_DIR = set
 SEN_DIR = sentinel
 DYN_DIR = dynamic
-
-BIN = sentinel_struc dynamic_struc 
+LNK_DIR = link
+BIN = sentinel_struc dynamic_struc link_struc
 
 CC ?= cc
-CPPFLAGS = -I ${SET_DIR} -I ${SEN_DIR} -I ${DYN_DIR} 
+CPPFLAGS = -I ${SET_DIR} -I ${SEN_DIR} -I ${DYN_DIR} -I ${LNK_DIR}
 CFLAGS = -Wall -Wextra -std=c99 -g
 LDFLAGS =
 
@@ -44,5 +44,15 @@ test_dynamic_struc.o: ${DYN_DIR}/test_dynamic_struc.c ${DYN_DIR}/set_dynamic.h
 dynamic_struc: test_dynamic_struc.o set_dynamic.o
 	${CC} test_dynamic_struc.o set_dynamic.o -o $@ ${LDFLAGS}
 
+#link
+
+link.o: ${LNK_DIR}/link.c ${LNK_DIR}/link.h
+	${CC} ${CPPFLAGS} ${CFLAGS} ${LNK_DIR}/link.c -c
+
+test_link_struc.o : ${LNK_DIR}/test_link_struc.c ${LNK_DIR}/link.h
+	${CC} ${CPPFLAGS} ${CFLAGS} ${LNK_DIR}/test_link_struc.c -c
+
+link_struc: test_link_struc.o link.o
+	${CC} test_link_struc.o link.o -o $@ ${LDFLAGS}
 
 
