@@ -80,3 +80,21 @@ int lnk__add_after(struct link *l, struct lelement *after,struct lelement * add)
 		return 1;
 	}
 }
+
+// Enlève le maillon se trouvant *après* `after` dans la liste `l` et
+// le retourne. Renvoie NULL si le maillon après `after` est la butée.
+// Pre  : after n'est pas la butée
+//        after->next != NULL
+// Post : return->next == NULL || return == NULL
+struct lelement *lnk__remove_after(struct link *l, struct lelement *after){
+	UNUSED(l);
+	if (llm__is_end_mark(after) || after->next==NULL ){
+		return NULL;
+	}
+	else{
+		struct lelement *ml_remove=after->next;
+		struct lelement *ml_next=ml_remove->next;
+		after->next=ml_next;
+		return ml_remove;
+	}
+}
