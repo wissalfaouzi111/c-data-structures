@@ -45,3 +45,17 @@ int lnk__add_head(struct link *l, struct lelement *add){
 	}
 }
 
+// Enlève le premier maillon de la liste `l` et le retourne
+// Si la liste est vide, renvoie NULL.
+// Post : return->next == NULL || return == NULL
+struct lelement *lnk__remove_head(struct link *l){
+	if (l->head	== LLM_SENTINEL_PTR ){
+		return NULL;
+	}
+	else{
+		struct lelement *first=lnk__first(l);
+		l->head=llm__next(first);
+		return first;
+	}
+}
+
