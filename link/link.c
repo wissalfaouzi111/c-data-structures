@@ -4,6 +4,8 @@
 
 #include "link.h"
 
+#define UNUSED(x) (void)(x)
+
 const struct lelement sentinel = {INT_MAX, (struct lelement *) &sentinel}; 
 
 // Retourne un booléen attestant si `e` est la butée
@@ -59,3 +61,21 @@ struct lelement *lnk__remove_head(struct link *l){
 	}
 }
 
+// Ajoute le maillon `add` à la suite du maillon `after` dans
+// la liste `l`
+// Rq : `l` peut ne pas être utilisé dans cette fonction.
+// Pre : after n'est pas la butée,
+//       add n'est pas la butée,
+//       after->next != NULL,
+//       add->next == NULL
+int lnk__add_after(struct link *l, struct lelement *after,struct lelement * add){
+	UNUSED(l);
+	if (llm__is_end_mark(after) || llm__is_end_mark(add) || after->next==NULL || add->next==NULL){
+		return 0;
+	}
+	else{
+		struct lelement *next_after=after->next;
+		after->next=add;
+		add->next=next_after;
+	}
+}
