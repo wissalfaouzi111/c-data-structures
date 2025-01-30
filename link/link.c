@@ -10,7 +10,7 @@ const struct lelement sentinel = {INT_MAX, (struct lelement *) &sentinel};
 
 // Retourne un booléen attestant si `e` est la butée
 int llm__is_end_mark(const struct lelement *e){
-	return (e->next == LLM_SENTINEL_PTR);
+	return (e == LLM_SENTINEL_PTR);
 }
 
 // Retourne le maillon suivant le maillon `e`
@@ -28,7 +28,7 @@ struct link lnk__empty(void){
 
 // Retourne le 1er maillon de la liste `l`
 struct lelement *lnk__first(const struct link *l){
-	return (l->head->next);
+	return (l->head);
 }
 
 
@@ -36,7 +36,7 @@ struct lelement *lnk__first(const struct link *l){
 // Pre : add->next == NULL,
 //       add n'est pas la butée
 int lnk__add_head(struct link *l, struct lelement *add){
-	if (add->next == NULL || llm__is_end_mark(add)){
+	if (add->next != NULL || llm__is_end_mark(add)){
 		return 0;
 	}
 	else{
@@ -70,7 +70,7 @@ struct lelement *lnk__remove_head(struct link *l){
 //       add->next == NULL
 int lnk__add_after(struct link *l, struct lelement *after,struct lelement * add){
 	UNUSED(l);
-	if (llm__is_end_mark(after) || llm__is_end_mark(add) || after->next==NULL || add->next==NULL){
+	if (llm__is_end_mark(after) || llm__is_end_mark(add) || after->next==NULL || add->next!=NULL){
 		return 0;
 	}
 	else{

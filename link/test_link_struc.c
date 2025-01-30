@@ -4,22 +4,159 @@
 
 #include "link.h"
 
-/*static void test_llm__is_end_mark(void){
-  printf("\n%s\n",__func__);
-  struct lelement e ;
-  e.data= __INT_MAX__;
-  e.next=(struct lelement *) &e;
-  assert(llm__is_end_mark(&e)==0);
-  struct lelement e1 ;
-  struct lelement next_e1 ;
-  e1.data= 11;
-  e1.next=&next_e1;
-  assert(llm__is_end_mark(&e1)==0);
-  printf("test valid :)\n\n");
-}*/
+void test_llm_is_end_mark() {
+    printf("Test llm__is_end_mark:\n");
 
+    // Cas 1: Vérifier si la sentinelle est bien détectée
+    llm__is_end_mark(LLM_SENTINEL_PTR) ?  printf("[PASS] Sentinelle détectée correctement.\n") : printf("Sentinelle non détectée.\n");
+    
+
+    // Cas 2: Vérifier si un élément normal n'est pas détecté comme sentinelle
+    struct lelement normal_element = {42, NULL};
+    llm__is_end_mark(&normal_element) ?  printf("[PASS] Sentinelle détectée correctement.\n") : printf("Sentinelle non détectée.\n\n");
+}
+
+void test_llm_next() {
+    printf("Test llm__next:\n");
+
+    // Cas 1: Vérifier le comportement avec un élément normal
+    struct lelement element1 = {10, LLM_SENTINEL_PTR};
+    struct lelement element2 = {20, &element1};
+    llm__next(&element2) == &element1 ? printf("[PASS] Pointeur suivant correct pour un élément normal.\n") : printf("Pointeur suivant incorrect.\n");
+    // Cas 2: Vérifier le comportement avec la sentinelle
+    llm__next(LLM_SENTINEL_PTR) == LLM_SENTINEL_PTR ? printf("[PASS] Pointeur suivant correct pour la sentinelle.\n\n") : printf("Pointeur suivant incorrect pour la sentinelle.\n\n");
+}
+
+void test_lnk_empty() {
+    printf("Test lnk__empty:\n");
+
+    // Créer une liste vide
+    struct link list = lnk__empty();
+    // Vérifier si la tête pointe vers la sentinelle
+    list.head == LLM_SENTINEL_PTR ? printf("[PASS] Liste vide correctement initialisée.\n\n") : printf("Liste vide non initialisée correctement.\n\n");
+}
+
+void test_lnk_first() {
+    printf("Test lnk__first:\n");
+
+    // Cas 1: Liste vide
+    struct link empty_list = lnk__empty();
+    lnk__first(&empty_list) == LLM_SENTINEL_PTR ? printf("[PASS] Premier élément d'une liste vide correctement détecté.\n") : printf("Premier élément d'une liste vide incorrect.\n");
+    // Cas 2: Liste non vide
+    struct lelement element1 = {10, NULL};
+    struct link list = lnk__empty();
+    lnk__add_head(&list, &element1);
+    lnk__first(&list) == &element1 ? printf("[PASS] Premier élément d'une liste non vide correctement détecté.\n\n") : printf("Premier élément d'une liste non vide incorrect.\n");
+}
+
+void test_lnk_add_head() {
+    printf("Test lnk__add_head:\n");
+
+    // Cas 1: Ajout dans une liste vide
+    struct link list = lnk__empty();
+    struct lelement element1 = {10, NULL};
+    if (lnk__add_head(&list, &element1) == 1 && list.head == &element1) {
+        printf("[PASS] Ajout en tête dans une liste vide réussi.\n");
+    } else {
+        printf("Ajout en tête dans une liste vide échoué.\n");
+    }
+
+    // Cas 2: Ajout dans une liste non vide
+    struct lelement element2 = {20, NULL};
+    if (lnk__add_head(&list, &element2) == 1 && list.head == &element2 && element2.next == &element1) {
+        printf("[PASS] Ajout en tête dans une liste non vide réussi.\n");
+    } else {
+        printf("Ajout en tête dans une liste non vide échoué.\n");
+    }
+
+    // Cas 3: Ajout d'un élément invalide (sentinelle ou next non NULL)
+    struct lelement invalid_element = {30, LLM_SENTINEL_PTR};
+    if (lnk__add_head(&list, &invalid_element) == 0) {
+        printf("[PASS] Ajout d'un élément invalide correctement refusé.\n\n");
+    } else {
+        printf("Ajout d'un élément invalide incorrectement accepté.\n");
+    }
+}
+
+void test_lnk_remove_head() {
+    printf("Test lnk__remove_head:\n");
+
+    // Cas 1: Suppression dans une liste vide
+    struct link empty_list = lnk__empty();
+    if (lnk__remove_head(&empty_list) == NULL) {
+        printf("  [PASS] Suppression dans une liste vide correctement gérée.\n");
+    } else {
+        printf("  [FAIL] Suppression dans une liste vide incorrecte.\n");
+    }
+
+    // Cas 2: Suppression dans une liste non vide
+    struct link list = lnk__empty();
+    struct lelement element1 = {10, NULL};
+    lnk__add_head(&list, &element1);
+    struct lelement *removed = lnk__remove_head(&list);
+    if (removed == &element1 && list.head == LLM_SENTINEL_PTR) {
+        printf("  [PASS] Suppression en tête dans une liste non vide réussie.\n\n");
+    } else {
+        printf("  [FAIL] Suppression en tête dans une liste non vide échouée.\n");
+    }
+}
+
+void test_lnk_add_after() {
+    printf("Test lnk__add_after:\n");
+
+    // Cas 1: Ajout après un élément normal
+    struct link list = lnk__empty();
+    struct lelement element1 = {10, NULL};
+    struct lelement element2 = {20, NULL};
+    lnk__add_head(&list, &element1);
+    lnk__add_after(&list,&element1,&element2);
+    if (element1.next == &element2) {
+        printf("  [PASS] Ajout après un élément normal réussi.\n");
+    } else {
+        printf("  [FAIL] Ajout après un élément normal échoué.\n");
+    }
+
+    // Cas 2: Ajout après la sentinelle (doit échouer)
+    if (lnk__add_after(&list, LLM_SENTINEL_PTR, &element2) == 0) {
+        printf("  [PASS] Ajout après la sentinelle correctement refusé.\n");
+    } else {
+        printf("  [FAIL] Ajout après la sentinelle incorrectement accepté.\n");
+    }
+}
+
+void test_lnk_remove_after() {
+    printf("Test lnk__remove_after:\n");
+
+    // Cas 1: Suppression après un élément normal
+    struct link list = lnk__empty();
+    struct lelement element1 = {10, NULL};
+    struct lelement element2 = {20, NULL};
+    lnk__add_head(&list, &element2);
+    lnk__add_head(&list, &element1);
+    struct lelement *removed = lnk__remove_after(&list, &element1);
+    if (removed == &element2 && element1.next == LLM_SENTINEL_PTR) {
+        printf("  [PASS] Suppression après un élément normal réussie.\n");
+    } else {
+        printf("  [FAIL] Suppression après un élément normal échouée.\n");
+    }
+
+    // Cas 2: Suppression après la sentinelle (doit échouer)
+    if (lnk__remove_after(&list, LLM_SENTINEL_PTR) == NULL) {
+        printf("  [PASS] Suppression après la sentinelle correctement refusée.\n");
+    } else {
+        printf("  [FAIL] Suppression après la sentinelle incorrectement acceptée.\n");
+    }
+}
 
 int main () {
   printf("%s\n", __FILE__);
+  test_llm_is_end_mark();
+  test_llm_next();
+  test_lnk_empty();
+  test_lnk_first();
+  test_lnk_add_head();
+  test_lnk_remove_head();
+  test_lnk_add_after();
+  test_lnk_remove_after();
   return EXIT_SUCCESS;
 }
