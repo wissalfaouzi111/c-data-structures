@@ -59,9 +59,6 @@ size_t set__size(const struct set *se){
     }
 }
 
-
-
-
  //Frees the dynamically allocated contents of the set se
 // Does *not* free the pointer se
 void set__free(struct set* se){
@@ -73,3 +70,15 @@ void set__free(struct set* se){
     }  
 }
 
+// Adds c to se
+// Returns 0 if c has been added to se, a negative value otherwise
+// NB: se should not be modified if c cannot be added to se
+int set__add(struct set *se, int c){
+    if (set__find(se,c)==1){
+        return 0;
+    }
+    else{
+        struct lelement *add=malloc(sizeof(struct lelement));
+        return lnk__add_after(se->l,find(se->l,c),add);  
+    }
+}
