@@ -49,10 +49,13 @@ dynamic_struc: test_dynamic_struc.o set_dynamic.o
 link.o: ${LNK_DIR}/link.c ${LNK_DIR}/link.h
 	${CC} ${CPPFLAGS} ${CFLAGS} ${LNK_DIR}/link.c -c
 
-test_link_struc.o : ${LNK_DIR}/test_link_struc.c ${LNK_DIR}/link.h
+set_link.o: ${LNK_DIR}/set_link.c ${LNK_DIR}/set_link.h
+	${CC} ${CPPFLAGS} ${CFLAGS} ${LNK_DIR}/set_link.c -c
+
+test_link_struc.o : ${LNK_DIR}/test_link_struc.c ${LNK_DIR}/set_link.h ${LNK_DIR}/link.h
 	${CC} ${CPPFLAGS} ${CFLAGS} ${LNK_DIR}/test_link_struc.c -c
 
-link_struc: test_link_struc.o link.o
-	${CC} test_link_struc.o link.o -o $@ ${LDFLAGS}
+link_struc: test_link_struc.o set_link.o link.o
+	${CC} test_link_struc.o set_link.o link.o -o $@ ${LDFLAGS}
 
 
