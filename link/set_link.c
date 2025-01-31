@@ -31,7 +31,7 @@ void link_free(struct link* l){
 // - or f should be inserted after e (if e is not in l)
 // pre-condition: l is sorted in increasing order
 struct lelement * find(struct link *l, int f){
-    if (lnk__first(l) == LLM_SENTINEL_PTR || f <= l->head->data){
+    if (lnk__first(l) == LLM_SENTINEL_PTR || f <= lnk__first(l)->data){
         return NULL;
     }
     struct lelement *el=lnk__first(l);
@@ -43,6 +43,11 @@ struct lelement * find(struct link *l, int f){
         }
     }
     return NULL; //NEVER REACHED
+}
+
+// Returns non-zero if c belongs to se, 0 otherwise
+int set__find(const struct set *se, int c){
+    return (llm__next(find(se->l,c))->data == c);
 }
 
 // Returns the number of elements in se
@@ -61,14 +66,10 @@ size_t set__size(const struct set *se){
     }
 }
 
-/*//helper function for debugging : display all elements in se
-void set__print(const struct set* se){
 
-}
+/*
 
-
-
- Frees the dynamically allocated contents of the set se
+ //Frees the dynamically allocated contents of the set se
 // Does *not* free the pointer se
 void set__free(struct set* se){
     link_free(se->l);   
