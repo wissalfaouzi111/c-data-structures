@@ -15,7 +15,9 @@ int llm__is_end_mark(const struct lelement *e){
 
 // Retourne le maillon suivant le maillon `e`
 struct lelement *llm__next(const struct lelement *e){
-
+	if(e==NULL){
+		return NULL;
+	}
 	return (e->next);
 }
 
