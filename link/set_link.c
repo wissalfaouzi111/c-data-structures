@@ -88,14 +88,14 @@ int set__add(struct set *se, int c){
         return -1;
     }
     struct lelement *add=malloc(sizeof(struct lelement));
+    add->data=c;
+    add->next=  NULL;
     if (set__is_empty(se)){
         se->l->head=add;
         add->next=LLM_SENTINEL_PTR;
-        add->data=c;
         return 0;
     }
     else if (lnk__add_after(se->l,find(se->l,c),add)){
-        add->data=c;
         return 0;
     } 
     else{
@@ -112,7 +112,9 @@ int set__remove(struct set *se, int c){
     }
     else{
         struct lelement *after=find(se->l,c);
-        struct lelement *deleted=lnk__remove_after(se->l,after);
+        struct lelement *deleted=malloc(sizeof(struct lelement));
+        deleted=lnk__remove_after(se->l,after);
+        deleted->next=NULL;
         free(deleted);
         return 0;
     }
