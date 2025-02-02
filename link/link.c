@@ -31,6 +31,9 @@ struct link lnk__empty(void){
 
 // Retourne le 1er maillon de la liste `l`
 struct lelement *lnk__first(const struct link *l){
+	if(l==NULL){
+		return NULL;
+	}
 	return (l->head);
 }
 
