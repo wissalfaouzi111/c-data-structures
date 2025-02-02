@@ -70,15 +70,41 @@ void set__free(struct set* se){
     }  
 }
 
+void link_free(struct link* l){
+    struct lelement* next =lnk__first(l);
+    while (!llm__is_end_mark(next)){
+        struct lelement* mail=llm__next(next);
+        free(next);
+        next=mail;
+    }  
+}
 // Adds c to se
 // Returns 0 if c has been added to se, a negative value otherwise
 // NB: se should not be modified if c cannot be added to se
 int set__add(struct set *se, int c){
-    if (set__find(se,c)==1){
+    if (set__find(se,c)){
+        return -1;
+    }
+    struct lelement *add=malloc(sizeof(struct lelement));
+    if (lnk__add_after(se->l,find(se->l,c),add)){
         return 0;
+    } 
+    else{
+        return -1;
+    }
+}
+
+// Removes c from se
+// Returns 0 if c has been removed from se, a negative value otherwise
+// NB: se should not be modified if c cannot be removed from se
+int set__remove(struct set *se, int c){
+    if (!set__find(se,c) || set__is_empty(se)){
+        return -1;
     }
     else{
-        struct lelement *add=malloc(sizeof(struct lelement));
-        return lnk__add_after(se->l,find(se->l,c),add);  
+        struct lelement *after=find(se->l,c);
+        struct lelement *deleted=lnk__remove_after(se->l,after);
+        free(deleted);
+        return 0;
     }
 }
