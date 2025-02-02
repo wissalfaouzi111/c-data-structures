@@ -42,7 +42,7 @@ int set__find(const struct set *se, int c){
     if (lnk__first(se->l) == LLM_SENTINEL_PTR || c < lnk__first(se->l)->data){
         return 0;
     }
-    return ((llm__next(find(se->l,c)))->data == c  || lnk__first(se->l)->data == c);
+    return (lnk__first(se->l)->data == c || (llm__next(find(se->l,c)))->data == c );
 }
 
 // Returns the number of elements in se
