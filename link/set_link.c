@@ -108,13 +108,13 @@ int set__remove(struct set *se, int c){
     }
     if (set__size(se)==1){
         *se=set__empty();
-
+        set__free(se);       
         return 0;
     }
     else{
         struct lelement *after=find(se->l,c);
         struct lelement *deleted=lnk__remove_after(se->l,after);
-        //free(deleted);
+        free(deleted);
         return 0;
     }
 }
