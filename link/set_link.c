@@ -112,9 +112,7 @@ int set__remove(struct set *se, int c){
     }
     else{
         struct lelement *after=find(se->l,c);
-        struct lelement *deleted=malloc(sizeof(struct lelement));
-        deleted=lnk__remove_after(se->l,after);
-        deleted->next=NULL;
+        struct lelement *deleted=lnk__remove_after(se->l,after);
         free(deleted);
         return 0;
     }
