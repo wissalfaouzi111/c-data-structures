@@ -64,12 +64,7 @@ size_t set__size(const struct set *se){
  //Frees the dynamically allocated contents of the set se
 // Does *not* free the pointer se
 void set__free(struct set* se){
-    struct lelement* next =lnk__first(se->l);
-    while (!llm__is_end_mark(next)){
-        struct lelement* mail=llm__next(next);
-        free(next);
-        next=mail;
-    }
+    link_free(se->l);
     free(se);  
 }
 
