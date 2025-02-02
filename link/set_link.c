@@ -107,8 +107,8 @@ int set__remove(struct set *se, int c){
         return -1;
     }
     if (set__size(se)==1){
-        *se=set__empty();
         set__free(se);       
+        *se=set__empty();
         return 0;
     }
     else{
