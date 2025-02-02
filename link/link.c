@@ -94,8 +94,7 @@ struct lelement *lnk__remove_after(struct link *l, struct lelement *after){
 	UNUSED(l);
 	if (llm__is_end_mark(after) || llm__next(after)==NULL || llm__next(after)==LLM_SENTINEL_PTR){
 		return NULL;
-	}
-	
+	}	
 	struct lelement *ml_remove=llm__next(after);
 	struct lelement *ml_next=llm__next(ml_remove);
 	after->next=ml_next;

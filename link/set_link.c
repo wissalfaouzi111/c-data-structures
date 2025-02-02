@@ -110,6 +110,10 @@ int set__remove(struct set *se, int c){
     if (!set__find(se,c) || set__is_empty(se)){
         return -1;
     }
+    if (set__size(se)==1){
+        *se=set__empty();
+        return 0;
+    }
     else{
         struct lelement *after=find(se->l,c);
         struct lelement *deleted=lnk__remove_after(se->l,after);
