@@ -42,7 +42,7 @@ int set__find(const struct set *se, int c){
     if (find(se->l,c)==NULL){
         return 0;
     }
-    return ((llm__next(find(se->l,c)))->data == c);
+    return ((llm__next(find(se->l,c)))->data == c  || lnk__first(se->l)->data == c);
 }
 
 // Returns the number of elements in se
