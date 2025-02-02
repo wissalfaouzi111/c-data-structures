@@ -76,12 +76,10 @@ int lnk__add_after(struct link *l, struct lelement *after,struct lelement * add)
 	if (llm__is_end_mark(after) || llm__is_end_mark(add) || llm__next(after)==NULL || llm__next(add)!=NULL ){
 		return 0;
 	}
-	//if ((llm__next(after) != LLM_SENTINEL_PTR && add->data > after->data && add->data < llm__next(after)->data) || ((llm__next(after) == LLM_SENTINEL_PTR && add->data > after->data))) {
-		add->next=after->next;
-		after->next=add;
-		return 1;
-	//}
-	//return 0;
+	add->next=after->next;
+	after->next=add;
+	return 1;
+
 }
 
 // Enlève le maillon se trouvant *après* `after` dans la liste `l` et
