@@ -89,9 +89,11 @@ int set__add(struct set *se, int c){
     if (set__is_empty(se)){
         se->l->head=add;
         add->next=LLM_SENTINEL_PTR;
+        add->data=c;
         return 0;
     }
     else if (lnk__add_after(se->l,find(se->l,c),add)){
+        add->data=c;
         return 0;
     } 
     else{
