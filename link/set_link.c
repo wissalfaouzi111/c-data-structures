@@ -84,7 +84,7 @@ void link_free(struct link* l){
 // Returns 0 if c has been added to se, a negative value otherwise
 // NB: se should not be modified if c cannot be added to se
 int set__add(struct set *se, int c){
-    if (set__find(se,c)){
+    if (set__find(se,c) || c<0){
         return -1;
     }
     struct lelement *add=malloc(sizeof(struct lelement));
