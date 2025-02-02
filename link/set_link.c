@@ -69,7 +69,8 @@ void set__free(struct set* se){
         struct lelement* mail=llm__next(next);
         free(next);
         next=mail;
-    }  
+    }
+    free(se);  
 }
 
 void link_free(struct link* l){
@@ -112,6 +113,7 @@ int set__remove(struct set *se, int c){
     }
     if (set__size(se)==1){
         *se=set__empty();
+
         return 0;
     }
     else{
