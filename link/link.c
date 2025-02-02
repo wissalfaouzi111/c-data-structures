@@ -15,7 +15,7 @@ int llm__is_end_mark(const struct lelement *e){
 
 // Retourne le maillon suivant le maillon `e`
 struct lelement *llm__next(const struct lelement *e){
-	
+
 	return (e->next);
 }
 
@@ -71,7 +71,7 @@ struct lelement *lnk__remove_head(struct link *l){
 //       add->next == NULL
 int lnk__add_after(struct link *l, struct lelement *after,struct lelement * add){
 	UNUSED(l);
-	if (llm__is_end_mark(after) || llm__is_end_mark(add) || after->next==NULL || add->next!=NULL){
+	if (llm__is_end_mark(after) || llm__is_end_mark(add) || after->next==NULL || add->next!=NULL || add->data <= after->data){
 		return 0;
 	}
 	else{
