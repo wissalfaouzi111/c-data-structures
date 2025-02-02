@@ -88,7 +88,7 @@ int lnk__add_after(struct link *l, struct lelement *after,struct lelement * add)
 // Post : return->next == NULL || return == NULL
 struct lelement *lnk__remove_after(struct link *l, struct lelement *after){
 	UNUSED(l);
-	if (llm__is_end_mark(after) || after->next==NULL ){
+	if (llm__is_end_mark(after) || after->next==NULL || after->next==LLM_SENTINEL_PTR){
 		return NULL;
 	}
 	else{
