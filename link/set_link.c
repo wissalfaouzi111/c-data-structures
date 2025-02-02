@@ -39,6 +39,9 @@ struct lelement * find(struct link *l, int f){
 
 // Returns non-zero if c belongs to se, 0 otherwise
 int set__find(const struct set *se, int c){
+    if (find(se->l,c)==NULL){
+        return 0;
+    }
     return (llm__next(find(se->l,c))->data == c);
 }
 
