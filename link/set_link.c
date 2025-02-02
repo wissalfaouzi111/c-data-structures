@@ -42,9 +42,8 @@ int set__find(const struct set *se, int c){
     if (find(se->l,c)==NULL){
         return 0;
     }
-    return (llm__next(find(se->l,c))->data == c);
+    return ((llm__next(find(se->l,c)))->data == c);
 }
-
 
 // Returns the number of elements in se
 size_t set__size(const struct set *se){
