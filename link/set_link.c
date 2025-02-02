@@ -11,7 +11,7 @@ struct set set__empty(void){
 }
 // Returns non-zero if se is empty.h, 0 otherwise
 int set__is_empty(const struct set* se){
-    return (lnk__first(se)== LLM_SENTINEL_PTR);
+    return (lnk__first(se->l)== LLM_SENTINEL_PTR);
 }
 
 
