@@ -91,12 +91,12 @@ int lnk__add_after(struct link *l, struct lelement *after,struct lelement * add)
 // Post : return->next == NULL || return == NULL
 struct lelement *lnk__remove_after(struct link *l, struct lelement *after){
 	UNUSED(l);
-	if (llm__is_end_mark(after) || after->next==NULL || after->next==LLM_SENTINEL_PTR){
+	if (llm__is_end_mark(after) || llm__next(after)==NULL || llm__next(after)==LLM_SENTINEL_PTR){
 		return NULL;
 	}
 	else{
-		struct lelement *ml_remove=after->next;
-		struct lelement *ml_next=ml_remove->next;
+		struct lelement *ml_remove=llm__next(after);
+		struct lelement *ml_next=llm__next(ml_remove);
 		after->next=ml_next;
 		ml_remove->next=NULL;
 		return ml_remove;
