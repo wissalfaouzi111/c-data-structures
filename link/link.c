@@ -71,7 +71,7 @@ struct lelement *lnk__remove_head(struct link *l){
 //       add->next == NULL
 int lnk__add_after(struct link *l, struct lelement *after,struct lelement * add){
 	UNUSED(l);
-	if (llm__is_end_mark(after) || llm__is_end_mark(add) || after->next==NULL || add->next!=NULL || add->data <= after->data){
+	if (llm__is_end_mark(after) || llm__is_end_mark(add) || after->next==NULL || add->next!=NULL || add->data <= after->data || add->data >= llm__next(after)->data){
 		return 0;
 	}
 	else{
