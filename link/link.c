@@ -95,6 +95,7 @@ struct lelement *lnk__remove_after(struct link *l, struct lelement *after){
 		struct lelement *ml_remove=after->next;
 		struct lelement *ml_next=ml_remove->next;
 		after->next=ml_next;
+		ml_remove->next=NULL;
 		return ml_remove;
 	}
 }
