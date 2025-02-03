@@ -39,7 +39,7 @@ struct lelement * find(struct link *l, int f){
 
 // Returns non-zero if c belongs to se, 0 otherwise
 int set__find(const struct set *se, int c){
-    if (lnk__first(se->l) == LLM_SENTINEL_PTR || c < lnk__first(se->l)->data){
+    if ( c < lnk__first(se->l)->data){
         return 0;
     }
     return (lnk__first(se->l)->data == c || (llm__next(find(se->l,c)))->data == c );
