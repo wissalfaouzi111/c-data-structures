@@ -65,7 +65,6 @@ size_t set__size(const struct set *se){
 // Does *not* free the pointer se
 void set__free(struct set* se){
     link_free(se->l);
-    free(se);  
 }
 
 void link_free(struct link* l){
@@ -107,8 +106,8 @@ int set__remove(struct set *se, int c){
         return -1;
     }
     if (set__size(se)==1){
-        set__free(se);       
-        *se=set__empty();
+        struct lelement *deleted=lnk__remove_head(se->l);
+        free(deleted);       
         return 0;
     }
     else{
