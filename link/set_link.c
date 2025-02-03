@@ -82,18 +82,20 @@ int set__add(struct set *se, int c){
     if (set__find(se,c) || c<0){
         return -1;
     }
-    struct lelement *add=malloc(sizeof(struct lelement));
-    add->data=c;
-    add->next=  NULL;
-    if (set__is_empty(se)){
-        se->l->head=add;
-        add->next=LLM_SENTINEL_PTR;
-        return 0;
+    else{
+        struct lelement *add=malloc(sizeof(struct lelement));
+        add->data=c;
+        add->next=  NULL;
+        if (set__is_empty(se)){
+            se->l->head=add;
+            add->next=LLM_SENTINEL_PTR;
+            return 0;
+        }
+        if(lnk__add_after(se->l,find(se->l,c),add)){
+            return 0;
+        }
     }
-    if (lnk__add_after(se->l,find(se->l,c),add)){
-        return 0;
-    }
-    return -1;
+    return -1; //NEVER REACHED 
 }
 
 // Removes c from se
