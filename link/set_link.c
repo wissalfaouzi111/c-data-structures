@@ -75,6 +75,7 @@ void link_free(struct link* l){
         next=mail;
     }  
 }
+
 // Adds c to se
 // Returns 0 if c has been added to se, a negative value otherwise
 // NB: se should not be modified if c cannot be added to se
