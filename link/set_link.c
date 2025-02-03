@@ -90,12 +90,9 @@ int set__add(struct set *se, int c){
         add->next=LLM_SENTINEL_PTR;
         return 0;
     }
-    else if (lnk__add_after(se->l,find(se->l,c),add)){
+    if (lnk__add_after(se->l,find(se->l,c),add)){
         return 0;
     } 
-    else{
-        return -1;
-    }
 }
 
 // Removes c from se
