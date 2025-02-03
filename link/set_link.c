@@ -95,7 +95,6 @@ int set__add(struct set *se, int c){
             return 0;
         }
     }
-    return -1; //NEVER REACHED 
 }
 
 // Removes c from se
