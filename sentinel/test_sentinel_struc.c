@@ -64,6 +64,7 @@ static void test_set_empty(void){
   printf("%s\n", __func__);
   struct set *se = set__empty();
   set__print(se);
+  set__free(se);
   printf("test_valide:)\n\n");    
 }
 
@@ -89,6 +90,7 @@ static void test_set__is_empty(void){
   struct set *s2=set__empty();
   set__print(s2);
   printf("s2 est %s\n",set__is_empty(s2) ? "vide" : "non vide");
+  set__free(se);
   printf("test_valide:)\n\n");    
 }
 

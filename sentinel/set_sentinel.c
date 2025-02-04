@@ -63,7 +63,7 @@ void shift_left(int s[], size_t begin){
 
     if (idx< SET__SIZE) {
         s[idx] =-2; 
-    }
+    };
 }
 
 
@@ -120,4 +120,11 @@ int set__remove(struct set *se, int c){
         shift_left(se->s,idx);
         return 0;  
     }
+}
+
+
+// Frees the dynamically allocated contents of the set se
+// Does *not* free the pointer se
+void set__free(struct set* se){
+    free(se);
 }
