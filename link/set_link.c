@@ -40,10 +40,17 @@ struct lelement * find(struct link *l, int f){
 
 // Returns non-zero if c belongs to se, 0 otherwise
 int set__find(const struct set *se, int c){
-    if (set__is_empty(se) || c < lnk__first(se->l)->data){
+    if (set__is_empty(se) || c < lnk__first(se->l)->data ){
         return 0;
     }
-    return (lnk__first(se->l)->data == c || (llm__next(find(se->l,c)))->data == c );
+    if (lnk__first(se->l)->data == c) {
+        return 1;
+    }
+    struct lelement *found = find(se->l, c);
+    if (found == NULL || llm__next(found) == NULL) {
+        return 0;
+    }
+    return (llm__next(found)->data == c);
 }
 
 // Returns the number of elements in se
