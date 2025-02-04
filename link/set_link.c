@@ -35,9 +35,6 @@ struct lelement * find(struct link *l, int f){
     }
     return NULL; 
 }
-
-
-
 // Returns non-zero if c belongs to se, 0 otherwise
 int set__find(const struct set *se, int c){
     if (set__is_empty(se) || c < lnk__first(se->l)->data ){
@@ -45,8 +42,6 @@ int set__find(const struct set *se, int c){
     }
     return (lnk__first(se->l)->data == c || llm__next(find(se->l,c))->data == c);
 }
-
-
 
 // Returns the number of elements in se
 size_t set__size(const struct set *se){
@@ -120,4 +115,13 @@ int set__remove(struct set *se, int c){
         free(deleted);
         return 0;
     }
+}
+
+//helper function for debugging : display all elements in se
+void set__print(const struct set* se){
+    struct lelement *el=lnk__first(l);
+    while (!llm__is_end_mark(el)){
+        printf("%d ",el->data);
+    }
+    printf("\n");
 }
