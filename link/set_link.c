@@ -105,7 +105,11 @@ int set__add(struct set *se, int c){
 // Returns 0 if c has been removed from se, a negative value otherwise
 // NB: se should not be modified if c cannot be removed from se
 int set__remove(struct set *se, int c){
-    if (!set__find(se,c) || set__is_empty(se)){
+    if (!set__find(se,c)){
+        return -1;
+    }
+    if (set__is_empty(se)){
+        set__free(se);
         return -1;
     }
     if (set__size(se)==1){
