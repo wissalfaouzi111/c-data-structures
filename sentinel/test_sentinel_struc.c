@@ -90,7 +90,7 @@ static void test_set__is_empty(void){
   struct set *s2=set__empty();
   set__print(s2);
   printf("s2 est %s\n",set__is_empty(s2) ? "vide" : "non vide");
-  set__free(se);
+  set__free(s2);
   printf("test_valide:)\n\n");    
 }
 
