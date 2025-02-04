@@ -6,7 +6,7 @@
 struct set;
 
 // Return a struct set representing the empty set
-struct set *set__empty(void);
+struct set set__empty(void);
 
 // Returns non-zero if se is empty, 0 otherwise
 int set__is_empty(const struct set* se);
