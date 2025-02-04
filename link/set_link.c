@@ -5,13 +5,12 @@
 struct set set__empty(void){
     struct set s;
     s.l=malloc(sizeof(struct link));
-    struct link link =lnk__empty();
-    *(s.l)=link;
+    *(s.l)=lnk__empty();
     return s;
 }
 // Returns non-zero if se is empty.h, 0 otherwise
 int set__is_empty(const struct set* se){
-    return (se==NULL || llm__is_end_mark(lnk__first(se->l)));
+    return (se==NULL || se->l==NULL || llm__is_end_mark(lnk__first(se->l)));
 }
 
 
