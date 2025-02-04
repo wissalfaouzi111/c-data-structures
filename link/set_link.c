@@ -92,7 +92,7 @@ int set__add(struct set *se, int c){
             add->next=LLM_SENTINEL_PTR;
             return 0;
         }
-        if (lnk__first(se->l)->data >= c){
+        if (lnk__first(se->l)->data > c){
             struct lelement *next_ =llm__next(lnk__first(se->l));
             se->l->head=add;
             add->next=next_;
