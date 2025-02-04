@@ -111,7 +111,6 @@ int set__remove(struct set *se, int c){
         struct lelement *deleted=lnk__remove_head(se->l);
         free(deleted);
         set__free(se);
-        se->l=NULL;       
         return 0;
     }
     else{
