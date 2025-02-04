@@ -92,8 +92,8 @@ int set__add(struct set *se, int c){
         add->data=c;
         add->next=  NULL;
         if (set__is_empty(se)){
-            se->l->head=add;
-            add->next=LLM_SENTINEL_PTR;
+            lnk__first(se->l)=add;
+            llm__next(add)=LLM_SENTINEL_PTR;
             return 0;
         }
         lnk__add_after(se->l,find(se->l,c),add);
