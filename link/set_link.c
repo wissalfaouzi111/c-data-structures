@@ -107,7 +107,7 @@ int set__remove(struct set *se, int c){
     }
     if (set__size(se)==1){
         struct lelement *deleted=lnk__remove_head(se->l);
-        set_free(se);       
+        set__free(se);       
         return 0;
     }
     else{
