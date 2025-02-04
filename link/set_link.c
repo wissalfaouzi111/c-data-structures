@@ -120,7 +120,8 @@ int set__remove(struct set *se, int c){
         return 0;
     }
     if (lnk__first(se->l)->data ==c){
-        lnk__remove_head(se->l);
+        struct lelement *el =lnk__remove_head(se->l);
+        free(el);
         return 0;
     }
     else{
