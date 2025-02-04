@@ -11,7 +11,7 @@ struct set set__empty(void){
 }
 // Returns non-zero if se is empty.h, 0 otherwise
 int set__is_empty(const struct set* se){
-    return (llm__is_end_mark(lnk__first(se->l)));
+    return (se==NULL || llm__is_end_mark(lnk__first(se->l)));
 }
 
 
@@ -105,11 +105,7 @@ int set__add(struct set *se, int c){
 // Returns 0 if c has been removed from se, a negative value otherwise
 // NB: se should not be modified if c cannot be removed from se
 int set__remove(struct set *se, int c){
-    if (!set__find(se,c)){
-        return -1;
-    }
-    if (set__is_empty(se)){
-        set__free(se);
+    if (!set__find(se,c) || set__is_empty(se)){
         return -1;
     }
     if (set__size(se)==1){
