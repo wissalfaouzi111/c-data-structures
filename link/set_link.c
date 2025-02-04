@@ -22,7 +22,7 @@ int set__is_empty(const struct set* se){
 // - or f should be inserted after e (if e is not in l)
 // pre-condition: l is sorted in increasing order
 struct lelement * find(struct link *l, int f){
-    if (llm__is_end_mark(lnk__first(l)) || f <= lnk__first(l)->data){
+    if (l==NULL || llm__is_end_mark(lnk__first(l)) || f <= lnk__first(l)->data){
         return NULL;
     }
     struct lelement *el=lnk__first(l);
