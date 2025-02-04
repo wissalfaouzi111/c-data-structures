@@ -124,7 +124,7 @@ int set__remove(struct set *se, int c){
     }
 }
 
-//helper function for debugging : display all elements in se
+/*//helper function for debugging : display all elements in se
 void set__print(const struct set* se){
     struct lelement *el=lnk__first(se->l);
     while (!llm__is_end_mark(el)){
@@ -132,4 +132,4 @@ void set__print(const struct set* se){
         el=llm__next(el);
     }
     printf("\n");
-}
+}*/
