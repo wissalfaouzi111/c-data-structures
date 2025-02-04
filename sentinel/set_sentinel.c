@@ -1,5 +1,7 @@
 #include "set_sentinel.h"
 #include <stdio.h>
+#include <stdlib.h>
+
 #define UNUSED(x) (void)(x)
 
 void set__free(struct set* se)
@@ -66,8 +68,10 @@ void shift_left(int s[], size_t begin){
 
 
 // Return a struct set representing the empty set
-struct set set__empty(void){
-    struct set se= {{SET__BOUND}};
+struct set *set__empty(void){
+    struct set *se=malloc(sizeof(struct set));
+    se->s[0]= SET__BOUND;
+    se->s[SET__SIZE-1]=10;
     return se;
 }
 
