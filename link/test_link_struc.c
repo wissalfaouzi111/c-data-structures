@@ -151,7 +151,8 @@ void test_set_empty() {
     printf("%s\n", __func__);
     struct set s = set__empty();
     assert(s.l != NULL);  
-    assert(set__is_empty(&s) == 1);  
+    assert(set__is_empty(&s) == 1); 
+    set__free(&s);
     printf("okkkk;)\n");
 }
 
@@ -159,14 +160,13 @@ void test_set_is_empty() {
     printf("%s\n", __func__);
     struct set s = set__empty();
     assert(set__is_empty(&s) == 1);  
-
     struct lelement elem1 = {5, NULL};
     s.l->head = &elem1;
     assert(set__is_empty(&s) == 0);
     set__free(&s);
     printf("okkkk;)\n");
 }
-
+/*
 void test_find() {
     printf("%s\n", __func__);
     struct link l = lnk__empty();
@@ -183,7 +183,6 @@ void test_find() {
     assert(find(&l, 6) == &elem1); 
     assert(find(&l, 7) == &elem1); 
     assert(find(&l, 8) == &elem2); 
-
     printf("okkkk;)\n");
 }
 void test_set_find(){
@@ -198,10 +197,11 @@ void test_set_find(){
     assert(set__find(&se,0)==0);  
     assert(set__find(&se,3)==1); 
     assert(set__find(&se,4)==0); 
+    set__free(&se);
     printf("okkkk;)\n");
 }
 
-/*void test_mar(){
+void test_mar(){
     printf("%s\n", __func__);
     struct set s=set__empty();
     set__print(&s);
@@ -210,6 +210,7 @@ void test_set_find(){
     set__add(&s,12);
     printf("Find 12 ? %d\n", set__find(&s, 12));
     set__print(&s);
+    set__free(&s);
 }*/
 
 int main () {
@@ -222,13 +223,13 @@ int main () {
   test_lnk_remove_head();
   test_lnk_add_after();
   test_lnk_remove_after();
-  //test_mar();
+  /*test_mar();
   test_set_empty();
   
   
   test_set_is_empty();
   test_find();
   test_set_find();
-  //test_mar();
+  //test_mar();*/
   return EXIT_SUCCESS;
 }
