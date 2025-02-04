@@ -67,6 +67,7 @@ size_t set__size(const struct set *se){
 void set__free(struct set* se){
     link_free(se->l);
     free(se->l);
+    se->l=NULL;
 }
 
 void link_free(struct link* l){
