@@ -1,6 +1,7 @@
 #include "set_link.h"
 #include "link.h"
 #include <stdlib.h>
+#include <stdio.h>
 // Return a struct set representing the empty set
 struct set set__empty(void){
     struct set s;
@@ -91,6 +92,12 @@ int set__add(struct set *se, int c){
             add->next=LLM_SENTINEL_PTR;
             return 0;
         }
+        if (lnk__first(se->l)->data >= c){
+            struct lelement *next_ =llm__next(lnk__first(se->l));
+            se->l->head=add;
+            add->next=next_;
+            return 0;
+        }
         lnk__add_after(se->l,find(se->l,c),add);
         return 0;     
     }
@@ -119,9 +126,10 @@ int set__remove(struct set *se, int c){
 
 //helper function for debugging : display all elements in se
 void set__print(const struct set* se){
-    struct lelement *el=lnk__first(l);
+    struct lelement *el=lnk__first(se->l);
     while (!llm__is_end_mark(el)){
         printf("%d ",el->data);
+        el=llm__next(el);
     }
     printf("\n");
 }
