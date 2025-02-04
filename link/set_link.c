@@ -93,13 +93,15 @@ int set__add(struct set *se, int c){
             return 0;
         }
         if (lnk__first(se->l)->data > c){
-            struct lelement *next_ =llm__next(lnk__first(se->l));
+            struct lelement *first =lnk__remove_head(se->l);
             se->l->head=add;
-            add->next=next_;
+            add->next=first->next;
+            first->next=NULL;
+            lnk__add_after(se->l,add,first);
             return 0;
         }
         lnk__add_after(se->l,find(se->l,c),add);
-        return 0;     
+        return 0;
     }
 }
 
