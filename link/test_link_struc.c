@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include "link.h"
-
+#include "set_link.h"
 void test_llm_is_end_mark() {
     printf("Test llm__is_end_mark:\n");
 
@@ -134,7 +134,7 @@ void test_lnk_remove_after() {
     lnk__add_head(&list, &element2);
     lnk__add_head(&list, &element1);
     struct lelement *removed = lnk__remove_after(&list, &element1);
-    if (removed == &element2 && element1.next == LLM_SENTINEL_PTR) {
+    if (removed == &element2 && element1.next == LLM_SENTINEL_PTR  && llm__next(removed)==NULL) {
         printf("  [PASS] Suppression après un élément normal réussie.\n");
     } else {
         printf("  [FAIL] Suppression après un élément normal échouée.\n");
@@ -147,6 +147,58 @@ void test_lnk_remove_after() {
         printf("  [FAIL] Suppression après la sentinelle incorrectement acceptée.\n");
     }
 }
+void test_set_empty() {
+    printf("%s\n", __func__);
+    struct set s = set__empty();
+    assert(s.l != NULL);  
+    assert(set__is_empty(&s) == 1);  
+    printf("okkkk;)\n");
+}
+
+void test_set_is_empty() {
+    printf("%s\n", __func__);
+    struct set s = set__empty();
+    assert(set__is_empty(&s) == 1);  
+
+    struct lelement elem1 = {5, NULL};
+    s.l->head = &elem1;
+    assert(set__is_empty(&s) == 0);  
+    printf("okkkk;)\n");
+}
+
+void test_find() {
+    printf("%s\n", __func__);
+    struct link l = lnk__empty();
+    assert(find(&l, 5) == NULL); 
+
+    struct lelement elem1 = {3, LLM_SENTINEL_PTR};
+    l.head = &elem1;
+    assert(find(&l, 2) == NULL);  
+    assert(find(&l, 3) == NULL);  
+    assert(find(&l, 4) == &elem1);
+
+    struct lelement elem2 = {7, LLM_SENTINEL_PTR};
+    elem1.next = &elem2;
+    assert(find(&l, 6) == &elem1); 
+    assert(find(&l, 7) == &elem1); 
+    assert(find(&l, 8) == &elem2); 
+
+    printf("okkkk;)\n");
+}
+void test_set_find(){
+    printf("%s\n", __func__);
+    struct set se =set__empty();
+    assert(set__find(&se,1)==0);
+    struct lelement el1={2,NULL};
+    se.l->head=&el1;
+    assert(set__find(&se,2)==1);
+    struct lelement el2={3,LLM_SENTINEL_PTR};
+    el1.next=&el2;
+    assert(set__find(&se,0)==0);  
+    assert(set__find(&se,3)==1); 
+    assert(set__find(&se,4)==0); 
+    printf("okkkk;)\n");
+}
 
 int main () {
   printf("%s\n", __FILE__);
@@ -158,5 +210,9 @@ int main () {
   test_lnk_remove_head();
   test_lnk_add_after();
   test_lnk_remove_after();
+  test_set_empty();
+  test_set_is_empty();
+  test_find();
+  test_set_find();
   return EXIT_SUCCESS;
 }
