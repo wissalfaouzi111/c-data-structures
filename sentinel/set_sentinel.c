@@ -4,10 +4,10 @@
 
 #define UNUSED(x) (void)(x)
 
-void set__free(struct set* se)
+/*void set__free(struct set* se)
 {
     UNUSED(se);
-}
+}*/
 void set__print(const struct set* se){
     printf("{");
     for (int i=0; (i<SET__SIZE) && (se->s[i] != SET__BOUND);i++){
