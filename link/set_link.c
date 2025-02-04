@@ -43,15 +43,10 @@ int set__find(const struct set *se, int c){
     if (set__is_empty(se) || c < lnk__first(se->l)->data ){
         return 0;
     }
-    if (lnk__first(se->l)->data == c) {
-        return 1;
-    }
-    struct lelement *found = find(se->l, c);
-    if (found == NULL || llm__next(found) == NULL) {
-        return 0;
-    }
-    return (llm__next(found)->data == c);
+    return (lnk__first(se->l)->data == c || llm__next(find(se->l,c))->data == c);
 }
+
+
 
 // Returns the number of elements in se
 size_t set__size(const struct set *se){
@@ -101,9 +96,8 @@ int set__add(struct set *se, int c){
             add->next=LLM_SENTINEL_PTR;
             return 0;
         }
-        if(lnk__add_after(se->l,find(se->l,c),add)){
-            return 0;
-        }
+        lnk__add_after(se->l,find(se->l,c),add);
+        return 0;     
     }
 }
 
