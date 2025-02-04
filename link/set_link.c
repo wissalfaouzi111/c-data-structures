@@ -29,7 +29,7 @@ struct lelement * find(struct link *l, int f){
     struct lelement *el=lnk__first(l);
     while (!llm__is_end_mark(el)){
         struct lelement *e=el;
-        el=llm__next(el);
+        el=llm__next(e);
         if (el->data >= f){
             return e;
         }
