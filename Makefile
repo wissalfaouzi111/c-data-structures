@@ -59,3 +59,14 @@ link_struc: test_link_struc.o set_link.o link.o
 	${CC} test_link_struc.o set_link.o link.o -o $@ ${LDFLAGS}
 
 
+af_sentinel: ${SET_DIR}/affectation.c set_sentinel.o
+	${CC} ${CPPFLAGS} ${CFLAGS} -D SENTINEL $< -o affectation.o -c
+	${CC} ${CPPFLAGS} ${CFLAGS} set_sentinel.o affectation.o -o $@
+
+af_dynamic: ${SET_DIR}/affectation.c set_dynamic.o
+	${CC} ${CPPFLAGS} ${CFLAGS} -D DYNAMIC $< -o affectation.o -c
+	${CC} ${CPPFLAGS} ${CFLAGS} set_dynamic.o affectation.o -o $@
+
+af_link: ${SET_DIR}/affectation.c link.o set_link.o
+	${CC} ${CPPFLAGS} ${CFLAGS} -D LINK $< -o affectation.o -c
+	${CC} ${CPPFLAGS} ${CFLAGS} link.o set_link.o affectation.o -o $@
