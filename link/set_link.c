@@ -37,6 +37,8 @@ struct lelement * find(struct link *l, int f){
     return NULL; //NEVER REACHED
 }
 
+
+
 // Returns non-zero if c belongs to se, 0 otherwise
 int set__find(const struct set *se, int c){
     if (set__is_empty(se) || c < lnk__first(se->l)->data){
