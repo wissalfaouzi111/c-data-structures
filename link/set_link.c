@@ -119,6 +119,10 @@ int set__remove(struct set *se, int c){
         set__free(se);
         return 0;
     }
+    if (lnk__first(se->l)->data ==c){
+        lnk__remove_head(se->l);
+        return 0;
+    }
     else{
         struct lelement *after=find(se->l,c);
         struct lelement *deleted=lnk__remove_after(se->l,after);
