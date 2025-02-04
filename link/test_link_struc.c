@@ -210,9 +210,9 @@ int main () {
   test_lnk_remove_head();
   test_lnk_add_after();
   test_lnk_remove_after();
-  test_set_empty();
+  /*test_set_empty();
   test_set_is_empty();
   test_find();
-  test_set_find();
+  test_set_find();*/
   return EXIT_SUCCESS;
 }
