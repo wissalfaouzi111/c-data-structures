@@ -2,7 +2,7 @@ SET_DIR = set
 SEN_DIR = sentinel
 DYN_DIR = dynamic
 LNK_DIR = link
-BIN = sentinel_struc dynamic_struc link_struc
+BIN = sentinel_struc dynamic_struc link_struc sentinel_func dynamic_func link_func
 
 CC ?= cc
 CPPFLAGS = -I ${SET_DIR} -I ${SEN_DIR} -I ${DYN_DIR} -I ${LNK_DIR}
@@ -70,3 +70,11 @@ af_dynamic: ${SET_DIR}/affectation.c set_dynamic.o
 af_link: ${SET_DIR}/affectation.c link.o set_link.o
 	${CC} ${CPPFLAGS} ${CFLAGS} -D LINK $< -o affectation.o -c
 	${CC} ${CPPFLAGS} ${CFLAGS} link.o set_link.o affectation.o -o $@
+
+
+sentinel_func :
+	echo "yopiii"
+dynamic_func :
+	echo "yopiii"
+link_func :
+	echo "yopiii"
