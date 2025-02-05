@@ -115,12 +115,13 @@ int set__remove(struct set *se, int c){
     }
     if (set__size(se)==1){
         struct lelement *deleted=lnk__remove_head(se->l);
+        deleted->next=NULL;
         free(deleted);
-        //set__free(se);
         return 0;
     }
     if (lnk__first(se->l)->data ==c){
         struct lelement *el =lnk__remove_head(se->l);
+        el->next=NULL;
         free(el);
         return 0;
     }
