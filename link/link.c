@@ -63,6 +63,7 @@ struct lelement *lnk__remove_head(struct link *l){
 	else{
 		struct lelement *first=lnk__first(l);
 		l->head=llm__next(first);
+		first->next=NULL;
 		return first;
 	}
 }
