@@ -42,7 +42,8 @@ static void test_set__is_empty(void){
   set__print(s2);
   printf("s2 est %s\n",set__is_empty(s2) ? "vide" : "non vide");
   printf("test_valide:)\n\n");
-  free(s1.s);    
+  free(s1.s);  
+  set__free(s2);  
 }
 
 static void test_set__size(void){
@@ -100,7 +101,7 @@ static void test_set__find(void){
   s1.s[2]=8;
   s1.s[3]=9;
   assert(set__find(&s1,3)==1);
-  assert(set__find(&s1,11)==0);
+  assert(set__find(&s1,11)==0); 
   free(s1.s);
   printf("test_valide:)\n\n");
 }
