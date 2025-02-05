@@ -83,7 +83,7 @@ static void test_find(void){
   //
   struct set *s3=set__empty();
   assert(find(s3->s,set__size(s3),1)==set__size(s3));
-  set__free(&s1);
+  free(s1.s);
   set__free(s3);
   printf("test_valide:)\n\n"); 
 }
