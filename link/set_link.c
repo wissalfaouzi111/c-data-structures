@@ -94,10 +94,10 @@ int set__add(struct set *se, int c){
             return 0;
         }
         if (lnk__first(se->l)->data > c){
+            struct lelement *el =llm__next(lnk__first(se->l));
             struct lelement *first =lnk__remove_head(se->l);
             se->l->head=add;
-            add->next=first->next;
-            first->next=NULL;
+            add->next=el;
             lnk__add_after(se->l,add,first);
             return 0;
         }
