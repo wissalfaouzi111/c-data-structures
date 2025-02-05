@@ -149,21 +149,21 @@ void test_lnk_remove_after() {
 }
 void test_set_empty() {
     printf("%s\n", __func__);
-    struct set s = set__empty();
-    assert(s.l != NULL);  
-    assert(set__is_empty(&s) == 1); 
-    set__free(&s);
+    struct set *s = set__empty();
+    assert(s->l != NULL);  
+    assert(set__is_empty(s) == 1); 
+    set__free(s);
     printf("okkkk;)\n");
 }
 
 void test_set_is_empty() {
     printf("%s\n", __func__);
-    struct set s = set__empty();
-    assert(set__is_empty(&s) == 1);  
+    struct set *s = set__empty();
+    assert(set__is_empty(s) == 1);  
     struct lelement elem1 = {5, NULL};
-    s.l->head = &elem1;
-    assert(set__is_empty(&s) == 0);
-    set__free(&s);
+    s->l->head = &elem1;
+    assert(set__is_empty(s) == 0);
+    set__free(s);
     printf("okkkk;)\n");
 }
 /*

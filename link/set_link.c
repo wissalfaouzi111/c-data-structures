@@ -3,10 +3,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 // Return a struct set representing the empty set
-struct set set__empty(void){
-    struct set s;
-    s.l=malloc(sizeof(struct link));
-    *(s.l)=lnk__empty();
+struct set *set__empty(void){
+    struct set *s=malloc(sizeof(struct set));
+    s->l=malloc(sizeof(struct link));
+    *(s->l)=lnk__empty();
     return s;
 }
 // Returns non-zero if se is empty.h, 0 otherwise
@@ -66,6 +66,7 @@ size_t set__size(const struct set *se){
 void set__free(struct set* se){
     link_free(se->l);
     free(se->l);
+    free(se);
 }
 
 void link_free(struct link* l){
