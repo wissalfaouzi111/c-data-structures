@@ -12,11 +12,11 @@ void set__print(const struct set* se){
 }
 
 // Return a struct set representing the empty set
-struct set set__empty(void){
-    struct set se;
-    se.size=0;
-    se.capacity=0;
-    se.s=NULL;
+struct set *set__empty(void){
+    struct set *se=malloc(sizeof(struct set));
+    se->size=0;
+    se->capacity=0;
+    se->s=NULL;
     return se;
 }
 
@@ -126,4 +126,5 @@ int set__remove(struct set *se, int c){
 // Does *not* free the pointer se
 void set__free(struct set* se){
     free(se->s);
+    free(se);
 }
