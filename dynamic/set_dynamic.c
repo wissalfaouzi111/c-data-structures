@@ -70,7 +70,6 @@ void shift_left(int s[], size_t begin, size_t end){
 // Returns 0 if c has been added to se, a negative value otherwise
 // NB: se should not be modified if c cannot be added to se
 int set__add(struct set *se, int c){
-    size_t idx=find(se->s,se->size,c);
     if (set__find(se,c) || c<0 ){
         return -1;
     }
@@ -85,6 +84,7 @@ int set__add(struct set *se, int c){
         se->capacity*=2;
         se->s=realloc(se->s,se->capacity * sizeof(int));   
     }
+    size_t idx=find(se->s,se->size,c);
     shift_right(se->s,idx,se->size);
     se->s[idx]=c;
     se->size++;
