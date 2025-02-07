@@ -122,7 +122,7 @@ static void test_set__remove(void){
   printf("test_valide:)\n\n");     
 }
 
-/*static void test_set__remove_with_shift (void) {
+static void test_set__remove_with_shift (void) {
   printf("%s", __func__);
   struct set st = {{1,2,3,4, SET__BOUND}};
 
@@ -148,14 +148,31 @@ static void test_set__remove(void){
   
   
   printf("\tnot yet\n");
-}*/
+}
+int is_even(int a){
+  return a%2 == 0;
+}
+
+void test_set_filter(void){
+  printf("%s\n",__func__);
+  struct set* s=set__empty();
+  for (size_t i=0;i<SET__SIZE;i++){
+    set__add(s,i);
+  }
+  set__print(s);
+  struct set* res=set__filter(s,is_even);
+  set__print(res);
+  set__free(s);
+  set__free(res);
+  printf("\tOK\n");
+}
 
 int main () {
   printf("%s\n", __FILE__);
   test_set__print();
   test_shift_right();
   test_shift_left();
-  //test_set__remove_with_shift();
+  test_set__remove_with_shift();
   test_find();
   test_set__find();
   test_set_empty();
@@ -163,5 +180,6 @@ int main () {
   test_set__is_empty();
   test_set__add();
   test_set__remove();
+  test_set_filter();
   return 0;
 }

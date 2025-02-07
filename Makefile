@@ -70,10 +70,17 @@ af_link: ${SET_DIR}/affectation.c link.o set_link.o
 	${CC} ${CPPFLAGS} ${CFLAGS} -D LINK $< -o affectation.o -c
 	${CC} ${CPPFLAGS} ${CFLAGS} link.o set_link.o affectation.o -o $@
 
+#
+test_set_func.o: ${SET_DIR}/test_set_func.c ${SET_DIR}/set.h 
+	${CC} ${CPPFLAGS} ${CFLAGS} ${SET_DIR}/test_set_func.c -c -o $@
 
-sentinel_func :
-	echo "yopiii"
-dynamic_func :
-	echo "yopiii"
-link_func :
-	echo "yopiii"
+sentinel_func: test_set_func.o set_sentinel.o
+	${CC} test_set_func.o set_sentinel.o -o $@ ${LDFLAGS}
+
+dynamic_func: test_set_func.o set_dynamic.o
+	${CC} test_set_func.o set_dynamic.o -o $@ ${LDFLAGS}
+
+link_func: test_set_func.o set_link.o link.o
+	${CC} test_set_func.o set_link.o link.o -o $@ ${LDFLAGS}
+
+

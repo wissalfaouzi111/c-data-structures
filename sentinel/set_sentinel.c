@@ -122,6 +122,16 @@ int set__remove(struct set *se, int c){
     }
 }
 
+struct set * set__filter(const struct set * s, int (*p)(int)){
+    struct set* se=set__empty();
+    for (size_t i=0;i<SET__SIZE;i++){
+        if(p(s->s[i])){
+            set__add(se,s->s[i]);
+        }
+        if (s->s[i]==SET__BOUND) break;
+    }
+    return se;
+}
 
 // Frees the dynamically allocated contents of the set se
 // Does *not* free the pointer se

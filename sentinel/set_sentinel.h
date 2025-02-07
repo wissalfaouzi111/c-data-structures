@@ -28,4 +28,7 @@ void shift_right(int s[], size_t begin);
 // SET__BOUND included, one position to the left. 
 void shift_left(int s[], size_t begin);
 
+
+struct set * set__filter(const struct set * s, int (*p)(int));
+
 #endif //__SET_SENTINEL_H__
