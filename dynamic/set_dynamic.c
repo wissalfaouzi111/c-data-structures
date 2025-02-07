@@ -1,5 +1,5 @@
 #include "set_dynamic.h"
-
+#include "set.h"
 void set__print(const struct set* se){
     printf("{  .size = %ld, .capacity = %ld, .s = {",se->size,se->capacity);
     for (size_t i=0;i < se->size; i++){
@@ -127,4 +127,14 @@ int set__remove(struct set *se, int c){
 void set__free(struct set* se){
     free(se->s);
     free(se);
+}
+
+struct set * set__filter(const struct set * s, int (*p)(int)){
+    struct set* se=set__empty();
+    for (size_t i=0;i< s->size;i++){
+        if(p(s->s[i])){
+            set__add(se,s->s[i]);
+        }
+    }
+    return se;
 }

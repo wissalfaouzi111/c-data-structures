@@ -34,4 +34,5 @@ void set__free(struct set* se);
 //helper function for debugging : display all elements in se
 void set__print(const struct set* se);
 
+struct set * set__filter(const struct set * s, int (*p)(int));
 #endif // __SET_H__

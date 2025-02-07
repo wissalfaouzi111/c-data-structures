@@ -166,6 +166,25 @@ void test_set_is_empty() {
     set__free(s);
     printf("okkkk;)\n");
 }
+
+int is_even(int a){
+  return a%2 == 0;
+}
+
+void test_set_filter(void){
+  printf("%s\n",__func__);
+  struct set* s=set__empty();
+  for (size_t i=0;i<10;i++){
+    set__add(s,i);
+  }
+  set__print(s);
+  struct set* res=set__filter(s,is_even);
+  set__print(res);
+  set__free(s);
+  set__free(res);
+  printf("\tOK\n");
+}
+
 /*
 void test_find() {
     printf("%s\n", __func__);
@@ -223,6 +242,7 @@ int main () {
   test_lnk_remove_head();
   test_lnk_add_after();
   test_lnk_remove_after();
+  test_set_filter();
   /*test_mar();
   test_set_empty();
   

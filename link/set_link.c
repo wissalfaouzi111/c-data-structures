@@ -141,3 +141,15 @@ void set__print(const struct set* se){
     }
     printf("\n");
 }
+
+struct set * set__filter(const struct set * s, int (*p)(int)){
+    struct set* se=set__empty();
+    struct lelement *el=lnk__first(s->l);
+    while (!llm__is_end_mark(el)){
+        if (p(el->data)){
+            set__add(se,el->data);
+        }
+        el=llm__next(el);
+    }
+    return se;
+}

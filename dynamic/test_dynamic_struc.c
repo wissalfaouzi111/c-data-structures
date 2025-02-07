@@ -199,6 +199,27 @@ static void test_set__remove(void){
   free(s1.s);
   printf("test_valide:)\n\n");    
 }
+
+int is_even(int a){
+  return a%2 == 0;
+}
+
+void test_set_filter(void){
+  printf("%s\n",__func__);
+  struct set* s=set__empty();
+  s->size=10;
+  for (size_t i=0;i<s->size;i++){
+    set__add(s,i);
+  }
+  set__print(s);
+  struct set* res=set__filter(s,is_even);
+  set__print(res);
+  set__free(s);
+  set__free(res);
+  printf("\tOK\n");
+}
+
+
 int main(){
     test_set__print();
     test_set_empty();
@@ -210,4 +231,5 @@ int main(){
     test_shift_left();
     test_set__add();
     test_set__remove();
+    test_set_filter();
 }
