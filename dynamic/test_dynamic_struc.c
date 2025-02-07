@@ -207,8 +207,7 @@ int is_even(int a){
 void test_set_filter(void){
   printf("%s\n",__func__);
   struct set* s=set__empty();
-  s->size=10;
-  for (size_t i=0;i<s->size;i++){
+  for (size_t i=0;i<10;i++){
     set__add(s,i);
   }
   set__print(s);
