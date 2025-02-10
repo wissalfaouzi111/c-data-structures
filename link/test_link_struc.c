@@ -214,18 +214,17 @@ void test_set_find(){
     set__free(se);
     printf("okkkk;)\n");
 }
-/*
-void test_mar(){
+
+void test_print(){
     printf("%s\n", __func__);
-    struct set s=set__empty();
-    set__print(&s);
-    set__add(&s,1890);
-    set__print(&s);
-    set__add(&s,12);
-    printf("Find 12 ? %d\n", set__find(&s, 12));
-    set__print(&s);
-    set__free(&s);
-}*/
+    struct set *s=set__empty();
+    set__print(s);
+    set__add(s,1890);
+    set__print(s);
+    set__add(s,12);
+    set__print(s);
+    set__free(s);
+}
 
 int main () {
   printf("%s\n", __FILE__);
@@ -244,6 +243,6 @@ int main () {
   test_set_is_empty();
   test_find();
   test_set_find();
-  /*test_mar();*/
+  test_print();
   return EXIT_SUCCESS;
 }
