@@ -187,20 +187,17 @@ void test_set_filter(void){
 
 void test_find() {
     printf("%s\n", __func__);
-    struct link l = lnk__empty();
-    assert(find(&l, 5) == NULL); 
+    struct set *s=set__empty();
+    assert(find(s->l, 5) == NULL); 
+    set__add(s,3);
+    assert(find(s->l, 2) == NULL);  
+    assert(find(s->l, 3) == NULL);  
+    assert(find(s->l, 4) == lnk__first(s->l));
 
-    struct lelement elem1 = {3, LLM_SENTINEL_PTR};
-    l.head = &elem1;
-    assert(find(&l, 2) == NULL);  
-    assert(find(&l, 3) == NULL);  
-    assert(find(&l, 4) == &elem1);
-
-    struct lelement elem2 = {7, LLM_SENTINEL_PTR};
-    elem1.next = &elem2;
-    assert(find(&l, 6) == &elem1); 
-    assert(find(&l, 7) == &elem1); 
-    assert(find(&l, 8) == &elem2); 
+    set__add(s,7);
+    assert(find(s->l, 6) == lnk__first(s->l)); 
+    assert(find(s->l, 7) ==lnk__first(s->l)); 
+    assert(find(s->l, 8) == llm__next(lnk__first(s->l))); 
     printf("okkkk;)\n");
 }
 void test_set_find(){
@@ -246,7 +243,7 @@ int main () {
   
   
   test_set_is_empty();
-  //test_find();
+  test_find();
   //test_set_find();
   /*test_mar();*/
   return EXIT_SUCCESS;
