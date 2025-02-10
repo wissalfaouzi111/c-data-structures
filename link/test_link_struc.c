@@ -209,7 +209,7 @@ void test_set_find(){
     struct set *se =set__empty();
     assert(set__find(se,1)==0);
     struct lelement el1={2,NULL};
-    se.l->head=&el1;
+    se->l->head=&el1;
     assert(set__find(se,2)==1);
     struct lelement el2={3,LLM_SENTINEL_PTR};
     el1.next=&el2;
