@@ -206,17 +206,17 @@ void test_find() {
 }
 void test_set_find(){
     printf("%s\n", __func__);
-    struct set se =set__empty();
-    assert(set__find(&se,1)==0);
+    struct set *se =set__empty();
+    assert(set__find(se,1)==0);
     struct lelement el1={2,NULL};
     se.l->head=&el1;
-    assert(set__find(&se,2)==1);
+    assert(set__find(se,2)==1);
     struct lelement el2={3,LLM_SENTINEL_PTR};
     el1.next=&el2;
-    assert(set__find(&se,0)==0);  
-    assert(set__find(&se,3)==1); 
-    assert(set__find(&se,4)==0); 
-    set__free(&se);
+    assert(set__find(se,0)==0);  
+    assert(set__find(se,3)==1); 
+    assert(set__find(se,4)==0); 
+    set__free(se);
     printf("okkkk;)\n");
 }
 /*
