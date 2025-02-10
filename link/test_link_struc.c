@@ -160,8 +160,7 @@ void test_set_is_empty() {
     printf("%s\n", __func__);
     struct set *s = set__empty();
     assert(set__is_empty(s) == 1);  
-    struct lelement elem1 = {5, NULL};
-    s->l->head = &elem1;
+    set__add(s,5);
     assert(set__is_empty(s) == 0);
     set__free(s);
     printf("okkkk;)\n");
@@ -246,7 +245,7 @@ int main () {
   test_set_empty();
   
   
-  //test_set_is_empty();
+  test_set_is_empty();
   //test_find();
   //test_set_find();
   /*test_mar();*/
