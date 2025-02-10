@@ -185,7 +185,7 @@ void test_set_filter(void){
   printf("\tOK\n");
 }
 
-/*
+
 void test_find() {
     printf("%s\n", __func__);
     struct link l = lnk__empty();
@@ -219,7 +219,7 @@ void test_set_find(){
     set__free(&se);
     printf("okkkk;)\n");
 }
-
+/*
 void test_mar(){
     printf("%s\n", __func__);
     struct set s=set__empty();
@@ -243,13 +243,12 @@ int main () {
   test_lnk_add_after();
   test_lnk_remove_after();
   test_set_filter();
-  /*test_mar();
   test_set_empty();
   
   
   test_set_is_empty();
   test_find();
   test_set_find();
-  //test_mar();*/
+  /*test_mar();*/
   return EXIT_SUCCESS;
 }
