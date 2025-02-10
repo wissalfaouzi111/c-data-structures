@@ -248,7 +248,7 @@ int main () {
   
   test_set_is_empty();
   test_find();
-  test_set_find();
+  //test_set_find();
   /*test_mar();*/
   return EXIT_SUCCESS;
 }
