@@ -197,7 +197,8 @@ void test_find() {
     set__add(s,7);
     assert(find(s->l, 6) == lnk__first(s->l)); 
     assert(find(s->l, 7) ==lnk__first(s->l)); 
-    assert(find(s->l, 8) == llm__next(lnk__first(s->l))); 
+    assert(find(s->l, 8) == llm__next(lnk__first(s->l)));
+    set__free(s); 
     printf("okkkk;)\n");
 }
 void test_set_find(){
