@@ -161,5 +161,5 @@ struct set * set__filter(const struct set * s, int (*p)(void*)){
 // Frees the dynamically allocated contents of the set se
 // Does *not* free the pointer se
 void set__free(struct set* se){
-    free(se);
+    se->del(se);
 }
