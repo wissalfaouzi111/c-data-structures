@@ -19,14 +19,14 @@ void set__print(const struct set* se){
 // returns the first position p in s such that s[p]>=c if any, or
 // the position of SET__BOUND otherwise.
 size_t find(int const s[], int c){ 
-    /*size_t idx=0;
+    size_t idx=0;
     for (idx=0;(idx<SET__SIZE) && (s[idx] != SET__BOUND) ;idx++){
         if( s[idx] >= c){
             return idx;
         }
     }
-    return idx++;*/
-    size_t a = 0;
+    return idx++;
+    /*size_t a = 0;
     size_t b = SET__SIZE;
     while (a < b && s[a] != SET__BOUND) {
         a++;
@@ -42,7 +42,7 @@ size_t find(int const s[], int c){
             a = m + 1;
         }
     }
-    return a;
+    return a;*/
 }
 // Returns non-zero if c belongs to se, 0 otherwise
 int set__find(const struct set *se, int c){
