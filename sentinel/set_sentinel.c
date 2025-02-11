@@ -27,6 +27,23 @@ size_t find(void* const s[], void* c){
         }
     }
     return idx++;
+    /*size_t a = 0;
+    size_t b = SET__SIZE;
+    while (a < b && s[a] != SET__BOUND) {
+        a++;
+    }
+    b = a-1; 
+    a = 0;
+    while (a < b) {
+        size_t m = a+(b - a) / 2;
+        if (s[m] >= c) {
+            b = m;
+        } 
+        else {
+            a = m + 1;
+        }
+    }
+    return a;*/
 }
 // Returns non-zero if c belongs to se, 0 otherwise
 int set__find(const struct set *se, void* c){
