@@ -2,25 +2,43 @@
 #include <stdio.h>
 
 #include "set.h"
+int cmp_int(const void* a,const void* b){
+  return (*((int*)a)) - (*((int*)b));
+}
+
+void* copy_int(void const *p){
+  int *res=malloc(sizeof(int));
+  *res = *((int*)p);
+  return res;
+}
+
+void del_int(void* p){
+  free(p);
+}
+
+void print_int(void* n){
+  printf("%p\n",n);
+}
 
 static void test_create_set(void) {
   printf("%s", __func__);
-  
-  struct set * st = set__empty();
+  int v[3]={11,12,13,78};
+  struct set * st = set__empty(cmp_int,copy_int,del_int);
 
   assert(set__is_empty(st));
   assert(set__size(st) == 0);
-  assert(! set__find(st, 11));
-  set__add(st,12);
-  set__add(st,13);
-  set__add(st,13);
-  assert(set__add(st,13)==-1);
-  assert(set__remove(st, 78) != 0);
+  assert(! set__find(st, &v[0]));
+  set__add(st,&v[1]);
+  set__add(st,&v[2]);
+  set__add(st,&v[2]);
+  assert(set__add(st,&v[2])==-1);
+  assert(set__remove(st, &v[3]) != 0);
 
   set__free(st);
 
   printf("\tOK\n");
 }
+
 
 int main(void) {
   printf("%s\n", __FILE__);
