@@ -33,8 +33,9 @@ static void test_set__print(void){
   set__print(s1,print_int);
   struct set* s2=set__empty(cmp_int,copy_int,del_int);
   set__print(s2,print_int);
+  set__free(s1);
+  set__free(s2);
   printf("test_valide :)\n\n"); 
-  
 }
 
 /*
