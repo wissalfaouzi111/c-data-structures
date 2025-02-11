@@ -21,7 +21,7 @@ struct set {
 
 // returns the first position p in s such that s[p]>=c if any, or
 // the position of SET__BOUND otherwise.
-size_t find(void* const s[], void* c);
+size_t find(void* const s[], void* c,int (*cmp)(const void *,const void*));
 
 // moves all elements in s starting from position begin and up to
 // SET__BOUND included, one position to the right.

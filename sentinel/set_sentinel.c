@@ -19,10 +19,10 @@ void set__print(const struct set * se, void (*print)(void *)){
 
 // returns the first position p in s such that s[p]>=c if any, or
 // the position of SET__BOUND otherwise.
-size_t find(void* const s[], void* c){ 
+size_t find(void* const s[], void* c,int (*cmp)(const void *,const void*)){ 
     size_t idx=0;
     for (idx=0;(idx<SET__SIZE) && (s[idx] != SET__BOUND) ;idx++){
-        if( s[idx] >= c){
+        if( cmp(s[idx],c) >= 0){
             return idx;
         }
     }
@@ -47,8 +47,8 @@ size_t find(void* const s[], void* c){
 }
 // Returns non-zero if c belongs to se, 0 otherwise
 int set__find(const struct set *se, void* c){
-    size_t IDX=find(se->s,c);
-    return (IDX<SET__SIZE) && (se->s[IDX] ==c);
+    size_t IDX=find(se->s,c,se->cmp);
+    return (IDX<SET__SIZE) && (se->cmp(se->s[IDX],c) ==0);
 }
 
 // moves all elements in s starting from position begin and up to
@@ -123,7 +123,7 @@ int set__add(struct set *se, void* c){
         return -1;
     }
     else{
-        size_t idx=find(se->s,c);
+        size_t idx=find(se->s,c,se->cmp);
         shift_right(se->s,idx);
         se->s[idx]=c;
         return 0;
@@ -141,7 +141,7 @@ int set__remove(struct set *se, void* c){
         return -1;
     }
     else{
-        size_t idx=find(se->s,c);  
+        size_t idx=find(se->s,c,se->cmp);  
         shift_left(se->s,idx);
         return 0;  
     }
