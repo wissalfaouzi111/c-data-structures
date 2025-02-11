@@ -8,17 +8,18 @@
 {
     UNUSED(se);
 }*/
-void set__print(const struct set* se){
+void set__print(const struct set * se, void (*print)(void *)){
     printf("{");
     for (int i=0; (i<SET__SIZE) && (se->s[i] != SET__BOUND);i++){
-        printf("%d ",se->s[i]);
+        //printf("%p ",se->s[i]);
+        print(se->s[i]);
     }
     printf("}\n");
 }
 
 // returns the first position p in s such that s[p]>=c if any, or
 // the position of SET__BOUND otherwise.
-size_t find(int const s[], int c){ 
+size_t find(void* const s[], void* c){ 
     size_t idx=0;
     for (idx=0;(idx<SET__SIZE) && (s[idx] != SET__BOUND) ;idx++){
         if( s[idx] >= c){
@@ -28,7 +29,7 @@ size_t find(int const s[], int c){
     return idx++;
 }
 // Returns non-zero if c belongs to se, 0 otherwise
-int set__find(const struct set *se, int c){
+int set__find(const struct set *se, void* c){
     size_t IDX=find(se->s,c);
     return (IDX<SET__SIZE) && (se->s[IDX] ==c);
 }
@@ -36,9 +37,9 @@ int set__find(const struct set *se, int c){
 // moves all elements in s starting from position begin and up to
 // SET__BOUND included, one position to the right.
 // The value in s[begin] is left unchanged.
-void shift_right(int s[], size_t begin){
+void shift_right(void* s[], size_t begin){
     size_t k;
-    int cur =s[begin],next;
+    void* cur =s[begin],*next;
     for (k=begin;(cur!= SET__BOUND) && (k+1<SET__SIZE);k++){
         next=s[k+1];
         s[k+1]=cur;
@@ -51,7 +52,7 @@ void shift_right(int s[], size_t begin){
 
 // moves all elements in s starting from position begin and up to
 // SET__BOUND included, one position to the left. 
-void shift_left(int s[], size_t begin){
+void shift_left(void* s[], size_t begin){
     size_t idx;
     for(idx=begin;(idx<SET__SIZE) && (s[idx]!=SET__BOUND);idx++){
         s[idx]=s[idx+1];
@@ -62,16 +63,21 @@ void shift_left(int s[], size_t begin){
     }
 
     if (idx< SET__SIZE) {
-        s[idx] =-2; 
+        s[idx] =cannary; 
     };
 }
 
 
 // Return a struct set representing the empty set
-struct set *set__empty(void){
+struct set *set__empty(int (*cmp)(const void*, const void*),
+                        void * (*copy)(void const *),
+                        void (*del)(void *)){
     struct set *se=malloc(sizeof(struct set));
     se->s[0]= SET__BOUND;
-    se->s[SET__SIZE-1]=10;
+    se->s[SET__SIZE-1]=cannary;
+    se->copy=copy;
+    se->cmp=cmp;
+    se->del=del;
     return se;
 }
 
@@ -94,8 +100,9 @@ int set__is_empty(const struct set* se){
 // Adds c to se
 // Returns 0 if c has been added to se, a negative value otherwise
 // NB: se should not be modified if c cannot be added to se
-int set__add(struct set *se, int c){
-    if (c<0 || set__find(se,c) || set__size(se)>= SET__SIZE-1){
+int set__add(struct set *se, void* c){
+    int v[1]={0};
+    if (se->cmp(&v[0],c) < 0 || set__find(se,c) || set__size(se)>= SET__SIZE-1){
         return -1;
     }
     else{
@@ -111,8 +118,9 @@ int set__add(struct set *se, int c){
 // Removes c from se
 // Returns 0 if c has been removed from se, a negative value otherwise
 // NB: se should not be modified if c cannot be removed from se
-int set__remove(struct set *se, int c){
-    if (c<0 || !set__find(se,c) || set__is_empty(se)){
+int set__remove(struct set *se, void* c){
+    int v[1]={0};
+    if (se->cmp(&v[0],c) < 0 || !set__find(se,c) || set__is_empty(se)){
         return -1;
     }
     else{
@@ -122,13 +130,13 @@ int set__remove(struct set *se, int c){
     }
 }
 
-struct set * set__filter(const struct set * s, int (*p)(int)){
-    struct set* se=set__empty();
+struct set * set__filter(const struct set * s, int (*p)(void*)){
+    struct set* se=set__empty(s->cmp,s->copy,s->del);
     for (size_t i=0;i<SET__SIZE;i++){
+        if (s->s[i]==SET__BOUND) break;
         if(p(s->s[i])){
             set__add(se,s->s[i]);
-        }
-        if (s->s[i]==SET__BOUND) break;
+        }        
     }
     return se;
 }

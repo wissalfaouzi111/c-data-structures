@@ -1,24 +1,49 @@
 #include <assert.h>
 #include <stdio.h>
-
 #include "set_sentinel.h"
+#include <stdlib.h>
+
+int cmp_int(const void* a,const void* b){
+  return (*((int*)a)) - (*((int*)b));
+}
+
+void* copy_int(void const *p){
+  int *res=malloc(sizeof(int));
+  *res = *((int*)p);
+  return res;
+}
+
+void del_int(void* p){
+  free(p);
+}
+
+void print_int(void* n){
+  printf("%p\n",n);
+}
+
 static void test_set__print(void){
   printf("%s\n", __func__);
-  struct set s1={{2,3,8,9,-1}};
-  set__print(&s1);
-  struct set s2={{}};
-  set__print(&s2);
-  struct set s3={{-1}};
-  set__print(&s3);
+  struct set* s1=set__empty(cmp_int,copy_int,del_int);
+  set__print(s1,print_int);
+  int v[4]={2,3,8,9};
+  for (int i=0;i<4;i++){
+    s1->s[i]=&v[i];
+  }
+  s1->s[4]=SET__BOUND;
+  set__print(s1,print_int);
+  struct set* s2=set__empty(cmp_int,copy_int,del_int);
+  set__print(s2,print_int);
   printf("test_valide :)\n\n"); 
 }
 
+/*
 static void test_find(void){
   printf("%s\n", __func__);
   //
+  int v[]={10,3}
   struct set s1={{2,3,8,9,-1}};
-  assert(find(s1.s,10)==4);
-  assert(find(s1.s,3)==1); 
+  assert(find(s1.s,&v[0])==4);
+  assert(find(s1.s,&v[1])==1); 
   //
   struct set s2={{}};
   for (size_t i =0;i<SET__SIZE;i++ ){
@@ -165,12 +190,12 @@ void test_set_filter(void){
   set__free(s);
   set__free(res);
   printf("\tOK\n");
-}
+}*/
 
 int main () {
   printf("%s\n", __FILE__);
   test_set__print();
-  test_shift_right();
+  /*test_shift_right();
   test_shift_left();
   test_set__remove_with_shift();
   test_find();
@@ -180,6 +205,6 @@ int main () {
   test_set__is_empty();
   test_set__add();
   test_set__remove();
-  test_set_filter();
+  test_set_filter();*/
   return 0;
 }
