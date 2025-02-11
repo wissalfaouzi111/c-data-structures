@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "set.h"
 int cmp_int(const void* a,const void* b){
@@ -22,7 +23,7 @@ void print_int(void* n){
 
 static void test_create_set(void) {
   printf("%s", __func__);
-  int v[3]={11,12,13,78};
+  int v[4]={11,12,13,78};
   struct set * st = set__empty(cmp_int,copy_int,del_int);
 
   assert(set__is_empty(st));
