@@ -162,23 +162,30 @@ static void test_shift_left(void){
 
 
 
-/*
+
 static void test_set__add(void){
   printf("%s\n", __func__);
-  struct set s1={{2,3,8,9,-1}};
-  assert(set__add(&s1,3)==-1);
-  assert(set__add(&s1,4)==0);
-  assert(set__add(&s1,10)==0);
-  assert(set__add(&s1,-2)==-1);
-
+  struct set* s1=set__empty(cmp_int,copy_int,del_int);
+  int v[4]={2,3,8,9};
+  for (int i=0;i<4;i++){
+    s1->s[i]=&v[i];
+  }
+  s1->s[4]=SET__BOUND;
+  int v1[4]={3,4,10,-2};
+  assert(set__add(s1,&v1[0])==-1);
+  assert(set__add(s1,&v1[1])==0);
+  assert(set__add(s1,&v1[2])==0);
+  assert(set__add(s1,&v1[3])==-1);
+/*
   struct set s2={{}};
   for (size_t i=0;i<SET__SIZE;i++){
     s2.s[i]=i;
   }
-  assert(set__add(&s2,SET__SIZE)==-1);  
+  assert(set__add(&s2,SET__SIZE)==-1); */
+  set__free(s1); 
   printf("test_valide:)\n\n");    
 }
-
+/*
 static void test_set__remove(void){
   printf("%s\n",__func__);
   struct set s1={{2,3,8,9,-1}};
@@ -246,11 +253,11 @@ int main () {
   test_set__is_empty();
   test_shift_right();
   test_shift_left();
+  test_set__add();
   /*test_set__remove_with_shift();
   
   
   
-  test_set__add();
   test_set__remove();
   test_set_filter();*/
   return 0;

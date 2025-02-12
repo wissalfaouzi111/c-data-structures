@@ -122,13 +122,15 @@ int set__is_empty(const struct set* se){
 // NB: se should not be modified if c cannot be added to se
 int set__add(struct set *se, void* c){
     int v[1]={0};
-    if (se->cmp(&v[0],c) < 0 || set__find(se,c) || set__size(se)>= SET__SIZE-1){
+    if (se->cmp(c,&v[0]) < 0 || set__find(se,c) || set__size(se)>= SET__SIZE-1){
         return -1;
     }
     else{
         size_t idx=find(se->s,c,se->cmp);
         shift_right(se->s,idx);
-        se->s[idx]=c;
+        void *p=se->copy(c);
+        se->s[idx]=p;
+        se->del(p);
         return 0;
     }
 }
