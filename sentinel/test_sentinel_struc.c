@@ -25,7 +25,7 @@ static void test_set_empty(void){
   printf("%s\n", __func__);
   struct set *se = set__empty(cmp_int,copy_int,del_int);
   set__print(se,print_int);
-  set__free(se);
+  free(se);
   printf("test_valide:)\n\n");    
 }
 
@@ -41,7 +41,7 @@ static void test_set__print(void){
   }
   s1->s[4]=SET__BOUND;
   set__print(s1,print_int);
-  set__free(s1);
+  free(s1);
   printf("test_valide :)\n\n"); 
 }
 
@@ -57,7 +57,7 @@ static void test_set__size(void){
   s1->s[4]=SET__BOUND;
   set__print(s1,print_int);
   printf("size: %ld\n",set__size(s1)); 
-  set__free(s1); 
+  free(s1); 
   printf("test_valide:)\n\n");    
 }
 
@@ -73,7 +73,7 @@ static void test_set__is_empty(void){
   s1->s[4]=SET__BOUND;
   set__print(s1,print_int);
   printf("s1 est %s\n",set__is_empty(s1) ? "vide" : "non vide");
-  set__free(s1);
+  free(s1);
   printf("test_valide:)\n\n");    
 }
 
@@ -100,8 +100,8 @@ static void test_find(void){
   }
   s2->s[SET__SIZE]=SET__BOUND;
   assert(find(s2->s,&v1[2],cmp_int)==SET__SIZE);
-  set__free(s1);
-  set__free(s2);
+  free(s1);
+  free(s2);
   printf("test_valide:)\n\n"); 
 }
 
@@ -119,7 +119,7 @@ static void test_set__find(void){
   assert(set__find(s1,&v1[2])==0);
   assert(set__find(s1,&v1[3])==0);
   assert(set__find(s1,&v1[0])==0);
-  set__free(s1);
+  free(s1);
   printf("test_valide:)\n\n");   
 }
 
@@ -137,7 +137,7 @@ static void test_shift_right(void){
   shift_right(s1->s,2);
   printf("Après:");
   set__print(s1,print_int);
-  set__free(s1);
+  free(s1);
   printf("test_valide:)\n\n");   
 }
 
@@ -154,7 +154,7 @@ static void test_shift_left(void){
   shift_left(s1->s,2);
   printf("Après:"); 
   set__print(s1,print_int);
-  set__free(s1);
+  free(s1);
   printf("test_valide:)\n\n");   
 }
 
@@ -168,9 +168,8 @@ static void test_set__add(void){
   struct set* s1=set__empty(cmp_int,copy_int,del_int);
   int v[4]={2,3,8,9};
   for (int i=0;i<4;i++){
-    s1->s[i]=&v[i];
+    assert(set__add(s1,&v[i])==0);;
   }
-  s1->s[4]=SET__BOUND;
   set__print(s1,print_int);
   int v1[4]={3,4,10,-2};
   assert(set__add(s1,&v1[0])==-1);
@@ -178,8 +177,8 @@ static void test_set__add(void){
   set__print(s1,print_int);
   assert(set__add(s1,&v1[2])==0);
   assert(set__add(s1,&v1[3])==-1);
-/*
-  struct set s2={{}};
+
+  /*struct set s2={{}};
   for (size_t i=0;i<SET__SIZE;i++){
     s2.s[i]=i;
   }

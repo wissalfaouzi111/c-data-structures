@@ -94,7 +94,7 @@ struct set *set__empty(int (*cmp)(const void*, const void*),
                         void (*del)(void *)){
     struct set *se=malloc(sizeof(struct set));
     se->s[0]= SET__BOUND;
-    se->s[SET__SIZE-1]=cannary;
+    //se->s[SET__SIZE-1]=cannary;
     se->copy=copy;
     se->cmp=cmp;
     se->del=del;
@@ -165,5 +165,8 @@ struct set * set__filter(const struct set * s, int (*p)(void*)){
 // Frees the dynamically allocated contents of the set se
 // Does *not* free the pointer se
 void set__free(struct set* se){
+    for (size_t i = 0; (i<SET__SIZE) && (se->s[i] != SET__BOUND); i++) {
+        se->del(se->s[i]);
+    }
     free(se);
 }
