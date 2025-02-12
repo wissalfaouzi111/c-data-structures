@@ -125,11 +125,12 @@ int set__add(struct set *se, void* c){
     if (se->cmp(c,&v[0]) < 0 || set__find(se,c) || set__size(se)>= SET__SIZE-1){
         return -1;
     }
-    /*if (set__is_empty(se)){
+    if (set__is_empty(se)){
         void *p=se->copy(c);
         se->s[0]=p;
-        se->s
-    }*/
+        se->s[1]=SET__BOUND;
+        return 0;
+    }
     else{
         size_t idx=find(se->s,c,se->cmp);
         shift_right(se->s,idx);
