@@ -200,7 +200,7 @@ static void test_set__remove(void){
   struct set* s1=set__empty(cmp_int,copy_int,del_int);
   int v[4]={2,3,8,9};
   for (int i=0;i<4;i++){
-    assert(set__add(s1,&v[i])==0);;
+    assert(set__add(s1,&v[i])==0);
   }
   int v1[3]={1,3,-2};
   assert(set__remove(s1,&v1[0])==-1);
@@ -209,7 +209,14 @@ static void test_set__remove(void){
 
   struct set *s2=set__empty(cmp_int,copy_int,del_int);
   assert(set__remove(s2,&v1[0])==-1); 
+
+
+  //ajouter puis enlever un élèment
+  struct set* s3=set__empty(cmp_int,copy_int,del_int);
+  assert(set__add(s3,&v[0])==0);
+  assert(set__remove(s3,&v[0])==0);
   set__free(s1); 
+  set__free(s3); 
   set__free(s2); 
   printf("test_valide:)\n\n");     
 }
