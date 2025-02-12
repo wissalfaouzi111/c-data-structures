@@ -21,6 +21,16 @@ void print_int(void* n){
   printf("%p  ",n);
 }
 
+static void test_set_empty(void){
+  printf("%s\n", __func__);
+  struct set *se = set__empty(cmp_int,copy_int,del_int);
+  set__print(se,print_int);
+  set__free(se);
+  printf("test_valide:)\n\n");    
+}
+
+
+
 static void test_set__print(void){
   printf("%s\n", __func__);
   struct set* s1=set__empty(cmp_int,copy_int,del_int);
@@ -35,6 +45,37 @@ static void test_set__print(void){
   printf("test_valide :)\n\n"); 
 }
 
+static void test_set__size(void){
+  printf("%s\n", __func__);
+  struct set* s1=set__empty(cmp_int,copy_int,del_int);
+  set__print(s1,print_int);
+  printf("size: %ld\n\n",set__size(s1));
+  int v[4]={2,3,8,9};
+  for (int i=0;i<4;i++){
+    s1->s[i]=&v[i];
+  }
+  s1->s[4]=SET__BOUND;
+  set__print(s1,print_int);
+  printf("size: %ld\n",set__size(s1)); 
+  set__free(s1); 
+  printf("test_valide:)\n\n");    
+}
+
+static void test_set__is_empty(void){
+  printf("%s\n", __func__);
+  struct set* s1=set__empty(cmp_int,copy_int,del_int);
+  set__print(s1,print_int);
+  printf("s1 est %s\n",set__is_empty(s1) ? "vide" : "non vide");
+  int v[4]={2,3,8,9};
+  for (int i=0;i<4;i++){
+    s1->s[i]=&v[i];
+  }
+  s1->s[4]=SET__BOUND;
+  set__print(s1,print_int);
+  printf("s1 est %s\n",set__is_empty(s1) ? "vide" : "non vide");
+  set__free(s1);
+  printf("test_valide:)\n\n");    
+}
 
 static void test_find(void){
   printf("%s\n", __func__);
@@ -49,7 +90,6 @@ static void test_find(void){
   s1->s[4]=SET__BOUND;
   assert(find(s1->s,&v1[0],cmp_int)==4);
   assert(find(s1->s,&v1[1],cmp_int)==1); 
-  //
   int v2[SET__SIZE];
   struct set *s2=set__empty(cmp_int,copy_int,del_int);
   for (size_t i =0;i<SET__SIZE;i++ ){
@@ -83,63 +123,46 @@ static void test_set__find(void){
   printf("test_valide:)\n\n");   
 }
 
-/*
+
 static void test_shift_right(void){
   printf("%s\n", __func__);
-  struct set s1={{1,3,4,6,10,-1}};
+  struct set* s1=set__empty(cmp_int,copy_int,del_int);
+  int v[4]={2,3,8,9};
+  for (int i=0;i<4;i++){
+    s1->s[i]=&v[i];
+  }
+  s1->s[4]=SET__BOUND;
   printf("Avant:");
-  set__print(&s1);
-  shift_right(s1.s,2);
+  set__print(s1,print_int);
+  shift_right(s1->s,2);
   printf("Après:");
-  set__print(&s1);  
+  set__print(s1,print_int);
+  set__free(s1);
   printf("test_valide:)\n\n");   
 }
 
 static void test_shift_left(void){
   printf("%s\n", __func__);
-  struct set s1={{1,3,4,6,10,-1}};
+  struct set* s1=set__empty(cmp_int,copy_int,del_int);
+  int v[4]={2,3,8,9};
+  for (int i=0;i<4;i++){
+    s1->s[i]=&v[i];
+  }
+  s1->s[4]=SET__BOUND;
   printf("Avant:");
-  set__print(&s1);
-  shift_left(s1.s,2);
+  set__print(s1,print_int);
+  shift_left(s1->s,2);
   printf("Après:"); 
-  set__print(&s1); 
+  set__print(s1,print_int);
+  set__free(s1);
   printf("test_valide:)\n\n");   
 }
 
-static void test_set_empty(void){
-  printf("%s\n", __func__);
-  struct set *se = set__empty();
-  set__print(se);
-  set__free(se);
-  printf("test_valide:)\n\n");    
-}
 
-static void test_set__size(void){
-  printf("%s\n", __func__);
-  struct set s1={{2,3,8,9,-1}};
-  set__print(&s1);
-  printf("size: %ld\n",set__size(&s1));
-  struct set s2={{}};
-  set__print(&s2);
-  printf("size: %ld\n",set__size(&s2));
-  struct set s3={{-1}};
-  set__print(&s3);
-  printf("size: %ld\n",set__size(&s3));
-  printf("test_valide:)\n\n");    
-}
 
-static void test_set__is_empty(void){
-  printf("%s\n", __func__);
-  struct set s1={{2,3,8,9,-1}};
-  set__print(&s1);
-  printf("s1 est %s\n",set__is_empty(&s1) ? "vide" : "non vide");
-  struct set *s2=set__empty();
-  set__print(s2);
-  printf("s2 est %s\n",set__is_empty(s2) ? "vide" : "non vide");
-  set__free(s2);
-  printf("test_valide:)\n\n");    
-}
 
+
+/*
 static void test_set__add(void){
   printf("%s\n", __func__);
   struct set s1={{2,3,8,9,-1}};
@@ -218,14 +241,15 @@ int main () {
   test_set__print();
   test_find();
   test_set__find();
-  /*test_shift_right();
-  test_shift_left();
-  test_set__remove_with_shift();
-  test_find();
-  
   test_set_empty();
   test_set__size();
   test_set__is_empty();
+  test_shift_right();
+  test_shift_left();
+  /*test_set__remove_with_shift();
+  
+  
+  
   test_set__add();
   test_set__remove();
   test_set_filter();*/
