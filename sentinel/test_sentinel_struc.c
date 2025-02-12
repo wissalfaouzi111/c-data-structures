@@ -207,9 +207,10 @@ static void test_set__remove(void){
   assert(set__remove(s1,&v1[1])==0);
   assert(set__remove(s1,&v1[2])==-1);
 
-  /*struct set s2={{-1}};
-  assert(set__remove(&s2,1)==-1); */
-  set__free(s1);  
+  struct set *s2=set__empty(cmp_int,copy_int,del_int);
+  assert(set__remove(s2,&v1[0])==-1); 
+  set__free(s1); 
+  set__free(s2); 
   printf("test_valide:)\n\n");     
 }
 /*
