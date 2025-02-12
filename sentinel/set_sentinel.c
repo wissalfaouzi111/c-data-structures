@@ -151,8 +151,8 @@ int set__remove(struct set *se, void* c){
     if (se->cmp(c,&v[0]) < 0 || !set__find(se,c) || set__is_empty(se)){
         return -1;
     }
-    if (set__is_empty(se)){
-        se->del(SET__BOUND);
+    if (set__size(se)==1){
+        se->del(se->s[0]);
         return 0;
     }
     else{
