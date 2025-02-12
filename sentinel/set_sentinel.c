@@ -48,6 +48,9 @@ size_t find(void* const s[], void* c,int (*cmp)(const void *,const void*)){
 // Returns non-zero if c belongs to se, 0 otherwise
 int set__find(const struct set *se, void* c){
     size_t IDX=find(se->s,c,se->cmp);
+    if (se->s[IDX]==SET__BOUND){
+        return 0;
+    }
     return (IDX<SET__SIZE) && (se->cmp(se->s[IDX],c) ==0);
 }
 
@@ -161,5 +164,12 @@ struct set * set__filter(const struct set * s, int (*p)(void*)){
 // Frees the dynamically allocated contents of the set se
 // Does *not* free the pointer se
 void set__free(struct set* se){
-    se->del(se);
+    /*size_t i;
+    for (i=0;i<SET__SIZE && se->s[i]!=SET__BOUND;i++){
+        se->del(se->s[i]);
+    }
+    if (se->s[i]==SET__BOUND){
+        free(se->s[i]);
+    }*/
+    free(se);
 }

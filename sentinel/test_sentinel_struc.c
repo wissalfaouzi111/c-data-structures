@@ -40,7 +40,7 @@ static void test_find(void){
   printf("%s\n", __func__);
   //
   struct set* s1=set__empty(cmp_int,copy_int,del_int);
-  int v1[2]={10,3};
+  int v1[3]={10,3,SET__SIZE+1};
   assert(find(s1->s,&v1[0],cmp_int)==0);
   int v[4]={2,3,8,9};
   for (int i=0;i<4;i++){
@@ -59,11 +59,30 @@ static void test_find(void){
     s2->s[i]=&v2[i];
   }
   s2->s[SET__SIZE]=SET__BOUND;
-  assert(find(s2->s,SET__SIZE+1,cmp_int)==SET__SIZE);
+  assert(find(s2->s,&v1[2],cmp_int)==SET__SIZE);
   set__free(s1);
   set__free(s2);
   printf("test_valide:)\n\n"); 
 }
+
+static void test_set__find(void){
+  printf("%s\n", __func__);
+  struct set* s1=set__empty(cmp_int,copy_int,del_int);
+  int v[4]={2,3,8,9};
+  for (int i=0;i<4;i++){
+    s1->s[i]=&v[i];
+  }
+  s1->s[4]=SET__BOUND;
+
+  int v1[4]={4,3,11,-1};
+  assert(set__find(s1,&v1[1])==1);
+  assert(set__find(s1,&v1[2])==0);
+  assert(set__find(s1,&v1[3])==0);
+  assert(set__find(s1,&v1[0])==0);
+  set__free(s1);
+  printf("test_valide:)\n\n");   
+}
+
 /*
 static void test_shift_right(void){
   printf("%s\n", __func__);
@@ -84,13 +103,6 @@ static void test_shift_left(void){
   shift_left(s1.s,2);
   printf("Après:"); 
   set__print(&s1); 
-  printf("test_valide:)\n\n");   
-}
-static void test_set__find(void){
-  printf("%s\n", __func__);
-  struct set s1={{2,3,8,9,-1}};
-  assert(set__find(&s1,3)==1);
-  assert(set__find(&s1,11)==0);
   printf("test_valide:)\n\n");   
 }
 
@@ -205,11 +217,12 @@ int main () {
   printf("%s\n", __FILE__);
   test_set__print();
   test_find();
+  test_set__find();
   /*test_shift_right();
   test_shift_left();
   test_set__remove_with_shift();
   test_find();
-  test_set__find();
+  
   test_set_empty();
   test_set__size();
   test_set__is_empty();
