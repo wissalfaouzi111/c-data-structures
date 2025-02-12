@@ -125,6 +125,11 @@ int set__add(struct set *se, void* c){
     if (se->cmp(c,&v[0]) < 0 || set__find(se,c) || set__size(se)>= SET__SIZE-1){
         return -1;
     }
+    /*if (set__is_empty(se)){
+        void *p=se->copy(c);
+        se->s[0]=p;
+        se->s
+    }*/
     else{
         size_t idx=find(se->s,c,se->cmp);
         shift_right(se->s,idx);
@@ -144,6 +149,10 @@ int set__remove(struct set *se, void* c){
 
     if (se->cmp(c,&v[0]) < 0 || !set__find(se,c) || set__is_empty(se)){
         return -1;
+    }
+    if (set__is_empty(se)){
+        se->del(SET__BOUND);
+        return 0;
     }
     else{
         size_t idx=find(se->s,c,se->cmp);  
