@@ -141,12 +141,15 @@ int set__add(struct set *se, void* c){
 // NB: se should not be modified if c cannot be removed from se
 int set__remove(struct set *se, void* c){
     int v[1]={0};
-    if (se->cmp(&v[0],c) < 0 || !set__find(se,c) || set__is_empty(se)){
+
+    if (se->cmp(c,&v[0]) < 0 || !set__find(se,c) || set__is_empty(se)){
         return -1;
     }
     else{
         size_t idx=find(se->s,c,se->cmp);  
+        se->del(se->s[idx]);
         shift_left(se->s,idx);
+
         return 0;  
     }
 }

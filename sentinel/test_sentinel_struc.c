@@ -166,39 +166,53 @@ static void test_shift_left(void){
 static void test_set__add(void){
   printf("%s\n", __func__);
   struct set* s1=set__empty(cmp_int,copy_int,del_int);
+  set__print(s1,print_int);
   int v[4]={2,3,8,9};
   for (int i=0;i<4;i++){
     assert(set__add(s1,&v[i])==0);;
   }
-  set__print(s1,print_int);
   int v1[4]={3,4,10,-2};
   assert(set__add(s1,&v1[0])==-1);
   assert(set__add(s1,&v1[1])==0);
   set__print(s1,print_int);
   assert(set__add(s1,&v1[2])==0);
   assert(set__add(s1,&v1[3])==-1);
+  printf("Après avoir ajouté les adresses:");
+  set__print(s1,print_int);
 
-  /*struct set s2={{}};
+
+  struct set* s2=set__empty(cmp_int,copy_int,del_int);
+  int v2[SET__SIZE];
   for (size_t i=0;i<SET__SIZE;i++){
-    s2.s[i]=i;
+    v2[i]=i;
   }
-  assert(set__add(&s2,SET__SIZE)==-1); */
+  for (size_t i=0;i<SET__SIZE-1;i++){
+    assert(set__add(s2,&v2[i])==0);
+  }
+  assert(set__add(s2,&v2[SET__SIZE])==-1); 
   set__free(s1); 
+  set__free(s2); 
   printf("test_valide:)\n\n");    
 }
-/*
+
 static void test_set__remove(void){
   printf("%s\n",__func__);
-  struct set s1={{2,3,8,9,-1}};
-  assert(set__remove(&s1,1)==-1);
-  assert(set__remove(&s1,3)==0);
-  assert(set__remove(&s1,-2)==-1);
+  struct set* s1=set__empty(cmp_int,copy_int,del_int);
+  int v[4]={2,3,8,9};
+  for (int i=0;i<4;i++){
+    assert(set__add(s1,&v[i])==0);;
+  }
+  int v1[3]={1,3,-2};
+  assert(set__remove(s1,&v1[0])==-1);
+  assert(set__remove(s1,&v1[1])==0);
+  assert(set__remove(s1,&v1[2])==-1);
 
-  struct set s2={{-1}};
-  assert(set__remove(&s2,1)==-1);  
+  /*struct set s2={{-1}};
+  assert(set__remove(&s2,1)==-1); */
+  set__free(s1);  
   printf("test_valide:)\n\n");     
 }
-
+/*
 static void test_set__remove_with_shift (void) {
   printf("%s", __func__);
   struct set st = {{1,2,3,4, SET__BOUND}};
@@ -255,11 +269,12 @@ int main () {
   test_shift_right();
   test_shift_left();
   test_set__add();
+  test_set__remove();
+
   /*test_set__remove_with_shift();
   
   
   
-  test_set__remove();
   test_set_filter();*/
   return 0;
 }
