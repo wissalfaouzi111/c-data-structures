@@ -130,7 +130,6 @@ int set__add(struct set *se, void* c){
         shift_right(se->s,idx);
         void *p=se->copy(c);
         se->s[idx]=p;
-        se->del(p);
         return 0;
     }
 }
