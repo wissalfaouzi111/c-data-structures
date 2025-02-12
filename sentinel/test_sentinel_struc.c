@@ -171,9 +171,11 @@ static void test_set__add(void){
     s1->s[i]=&v[i];
   }
   s1->s[4]=SET__BOUND;
+  set__print(s1,print_int);
   int v1[4]={3,4,10,-2};
   assert(set__add(s1,&v1[0])==-1);
   assert(set__add(s1,&v1[1])==0);
+  set__print(s1,print_int);
   assert(set__add(s1,&v1[2])==0);
   assert(set__add(s1,&v1[3])==-1);
 /*
