@@ -220,38 +220,41 @@ static void test_set__remove(void){
   set__free(s2); 
   printf("test_valide:)\n\n");     
 }
-/*
+
 static void test_set__remove_with_shift (void) {
   printf("%s", __func__);
-  struct set st = {{1,2,3,4, SET__BOUND}};
+  struct set* st=set__empty(cmp_int,copy_int,del_int);
+  int v[4]={1,2,3,4};
+  for (int i=0;i<4;i++){
+    assert(set__add(st,&v[i])==0);
+  }
 
-  set__remove(&st, 3);
-  assert(st.s[0] == 1);
-  assert(st.s[1] == 2);
-  assert(st.s[2] == 4);
-  assert(st.s[3] == SET__BOUND);
+  set__remove(st, &v[2]);
+  assert(st->cmp(st->s[0],&v[0])==0);
+  assert(st->cmp(st->s[1],&v[1])==0);
+  assert(st->cmp(st->s[2],&v[3])==0);
+  assert(st->s[3]==SET__BOUND);
 
-  set__remove(&st, 4);
-  assert(st.s[0] == 1);
-  assert(st.s[1] == 2);
-  assert(st.s[2] == SET__BOUND);
+  set__remove(st, &v[3]);
+  assert(st->cmp(st->s[0],&v[0])==0);
+  assert(st->cmp(st->s[1],&v[1])==0);
+  assert(st->s[2] == SET__BOUND);
 
-  set__remove(&st, 1);
-  assert(st.s[0] == 2);
-  assert(st.s[1] == SET__BOUND);
+  set__remove(st,&v[0]);
+  assert(st->cmp(st->s[0],&v[1])==0);
+  assert(st->s[1] == SET__BOUND);
 
-  set__remove(&st, 2);
-  assert(st.s[0] == SET__BOUND);
-
+  set__remove(st,&v[1]);
+  assert(st->s[0] == SET__BOUND);
+  set__free(st); 
+  
   printf("\tOK\n");
   
-  
-  printf("\tnot yet\n");
 }
 int is_even(int a){
   return a%2 == 0;
 }
-
+/*
 void test_set_filter(void){
   printf("%s\n",__func__);
   struct set* s=set__empty();
@@ -279,10 +282,10 @@ int main () {
   test_set__add();
   test_set__remove();
 
-  /*test_set__remove_with_shift();
+  test_set__remove_with_shift();
   
   
   
-  test_set_filter();*/
+  /*test_set_filter();*/
   return 0;
 }
