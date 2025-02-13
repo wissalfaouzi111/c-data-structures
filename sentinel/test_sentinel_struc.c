@@ -261,7 +261,9 @@ void test_set_filter(void){
   int v[SET__SIZE];
   for (size_t i=0;i<SET__SIZE;i++){
     v[i]=i;
-    assert(set__add(s,&v[i]));
+  }
+  for (size_t i=0;i<SET__SIZE;i++){
+    assert(set__add(s,&v[i])==0);
   }
   set__print(s,print_int);
   struct set* res=set__filter(s,is_even);
@@ -288,6 +290,6 @@ int main () {
   
   
   
-  //test_set_filter();
+  test_set_filter();
   return 0;
 }
