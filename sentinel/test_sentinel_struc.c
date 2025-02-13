@@ -169,12 +169,11 @@ static void test_set__add(void){
   for (int i=0;i<4;i++){
     assert(set__add(s1,&v[i])==0);;
   }
-  int v1[4]={3,4,10,-2};
+  int v1[3]={3,4,10};
   assert(set__add(s1,&v1[0])==-1);
   assert(set__add(s1,&v1[1])==0);
   set__print(s1,print_int);
   assert(set__add(s1,&v1[2])==0);
-  assert(set__add(s1,&v1[3])==-1);
   printf("Après avoir ajouté les adresses:");
   set__print(s1,print_int);
 

@@ -121,8 +121,8 @@ int set__is_empty(const struct set* se){
 // Returns 0 if c has been added to se, a negative value otherwise
 // NB: se should not be modified if c cannot be added to se
 int set__add(struct set *se, void* c){
-    int v[1]={0};
-    if (se->cmp(c,&v[0]) < 0 || set__find(se,c) || set__size(se)>= SET__SIZE-1){
+    //int v[1]={0};
+    if (/*se->cmp(c,&v[0]) < 0 || */set__find(se,c) || set__size(se)>= SET__SIZE-1){
         return -1;
     }
     if (set__is_empty(se)){
@@ -146,9 +146,9 @@ int set__add(struct set *se, void* c){
 // Returns 0 if c has been removed from se, a negative value otherwise
 // NB: se should not be modified if c cannot be removed from se
 int set__remove(struct set *se, void* c){
-    int v[1]={0};
+    //int v[1]={0};
 
-    if (se->cmp(c,&v[0]) < 0 || !set__find(se,c) || set__is_empty(se)){
+    if (/*se->cmp(c,&v[0]) < 0 || */!set__find(se,c) || set__is_empty(se)){
         return -1;
     }
     
