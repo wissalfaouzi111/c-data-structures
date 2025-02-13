@@ -30,6 +30,8 @@ static void test_create_set(void) {
   assert(set__size(st) == 0);
   assert(! set__find(st, &v[0]));
   set__add(st,&v[1]);
+
+  //ajouter le même élément à un ensemble non vide.
   set__add(st,&v[2]);
   set__add(st,&v[2]);
   assert(set__add(st,&v[2])==-1);
@@ -40,6 +42,22 @@ static void test_create_set(void) {
   printf("\tOK\n");
 }
 
+struct person {
+  char * firstname;
+  char * lastname;
+  unsigned int year;
+  unsigned char month;
+  unsigned char day;
+};
+
+
+//Adding a struct person to and from an empty set
+void test_add_person(void){
+  struct set * st = set__empty(cmp_int,copy_int,del_int);
+  struct person p={"wissal","faouzi",2004,12,20};
+  assert(set__add(st,&p)==0);
+  set__free(st);
+}
 
 int main(void) {
   printf("%s\n", __FILE__);

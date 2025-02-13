@@ -29,8 +29,6 @@ static void test_set_empty(void){
   printf("test_valide:)\n\n");    
 }
 
-
-
 static void test_set__print(void){
   printf("%s\n", __func__);
   struct set* s1=set__empty(cmp_int,copy_int,del_int);
