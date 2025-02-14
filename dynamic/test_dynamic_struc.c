@@ -18,13 +18,13 @@ void* copy_int(void const *p){
 void del_int(void* p){
   free(p);
 }
-/*
+
 static void test_set__print(void){
   printf("%s\n",__func__);
   struct set s1;
   s1.capacity=4;
   s1.size=4;
-  s1.s=malloc(s1.capacity * sizeof(int));
+  s1.s=malloc(s1.capacity * sizeof(void *));
   int v[4]={2,3,8,9};
   s1.s[0]=&v[0];
   s1.s[1]=&v[1];
@@ -33,7 +33,7 @@ static void test_set__print(void){
   set__print(&s1,print_int);
   free(s1.s);
   printf("test_valide:)\n\n");    
-}*/
+}
 
 static void test_set_empty(void){
   printf("%s\n", __func__);
@@ -245,7 +245,7 @@ void test_set_filter(void){
 
 
 int main(){
-    //test_set__print();
+    test_set__print();
     test_set_empty();
     /*test_set__is_empty();
     test_set__size();

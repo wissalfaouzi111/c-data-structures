@@ -16,15 +16,12 @@ struct set *set__empty(int (*cmp)(const void*, const void*),
                         void * (*copy)(void const *),
                         void (*del)(void *)){
     struct set *se=malloc(sizeof(struct set));
-    printf("********\n");
-
     se->size=0;
     se->capacity=0;
     se->s=NULL;
     se->copy=copy;
     se->cmp=cmp;
     se->del=del;
-
     return se;
 }
 
@@ -85,7 +82,8 @@ int set__add(struct set *se, void* c){
         se->capacity++;
         se->size++;
         se->s=malloc(se->capacity *sizeof(int));
-        se->s[0]=c;
+        void* p=se->copy(c);
+        se->s[0]=p;
         return 0;
     }
     if (se->capacity == se->size){
@@ -94,7 +92,8 @@ int set__add(struct set *se, void* c){
     }
     size_t idx=find(se->s,se->size,c,se->cmp);
     shift_right(se->s,idx,se->size);
-    se->s[idx]=c;
+    void* p=se->copy(c);
+    se->s[idx]=p;
     se->size++;
     return 0;
 }
@@ -109,6 +108,7 @@ int set__remove(struct set *se, void* c){
     else{
         size_t size=se->size;
         size_t idx=find(se->s,size,c,se->cmp);
+        se->del(se->s[idx]);
         shift_left(se->s,idx,size);
         se->size--;
         if (se->capacity == 1){
@@ -149,3 +149,4 @@ struct set * set__filter(const struct set * s, int (*p)(void* c)){
     }
     return se;
 }
+
