@@ -87,31 +87,29 @@ static void test_set__size(void){
   set__free(s3);
   printf("test_valide:)\n\n");    
 }
-/*
+
 static void test_find(void){
-  printf("%s\n", _tatic void test_set_empty(void){
   printf("%s\n", __func__);
-  struct set *se = set__empty(cmp_int,copy_int,del_int);
-  assert(se->size==0);
-  set__print(se,print_int);
-  fre_func__);
+  struct set *s1 = set__empty(cmp_int,copy_int,del_int);
+  assert(s1->size==0);
+  set__print(s1,print_int);
   //
-  struct set s1;
-  s1.capacity=4;
-  s1.size=4;
-  s1.s=malloc(s1.capacity * sizeof(int));
-  s1.s[0]=2;
-  s1.s[1]=3;
-  s1.s[2]=8;
-  s1.s[3]=9;
-  int v
-  assert(find(s1.s,set__size(&s1),10)==set__size(&s1));
-  assert(find(s1.s,set__size(&s1),3)==1); 
-  assert(find(s1.s,set__size(&s1), 0) == 0);
+  s1->capacity=4;
+  s1->size=4;
+  s1->s=malloc(s1->capacity * sizeof(void *));
+  int v[7]={2,3,8,9,10,0,1};
+  s1->s[0]=&v[0];
+  s1->s[1]=&v[1];
+  s1->s[2]=&v[2];
+  s1->s[3]=&v[3];
+  assert(find(s1->s,set__size(s1),&v[4],s1->cmp)==set__size(s1));
+  assert(find(s1->s,set__size(s1),&v[1],s1->cmp)==1); 
+  assert(find(s1->s,set__size(s1), &v[5],s1->cmp) == 0);
   //
   struct set *s3=set__empty(cmp_int,copy_int,del_int);
-  assert(find(s3->s,set__size(s3),1)==set__size(s3));
-  free(s1.s);
+  assert(find(s3->s,set__size(s3),&v[6],s3->cmp)==set__size(s3));
+  free(s1->s);
+  free(s1);
   set__free(s3);
   printf("test_valide:)\n\n"); 
 }
@@ -119,20 +117,22 @@ static void test_find(void){
 // Returns non-zero if c belongs to se, 0 otherwise
 static void test_set__find(void){
   printf("%s\n", __func__);
-  struct set s1;
-  s1.capacity=4;
-  s1.size=4;
-  s1.s=malloc(s1.capacity * sizeof(int));
-  s1.s[0]=2;
-  s1.s[1]=3;
-  s1.s[2]=8;
-  s1.s[3]=9;
-  assert(set__find(&s1,3)==1);
-  assert(set__find(&s1,11)==0); 
-  free(s1.s);
+  struct set *s1=set__empty(cmp_int,copy_int,del_int);
+  s1->capacity=4;
+  s1->size=4;
+  s1->s=malloc(s1->capacity * sizeof(void *));
+  int v[5]={2,3,8,9,11};
+  s1->s[0]=&v[0];
+  s1->s[1]=&v[1];
+  s1->s[2]=&v[2];
+  s1->s[3]=&v[3];
+  assert(set__find(s1,&v[0])==1);
+  assert(set__find(s1,&v[4])==0); 
+  free(s1->s);
+  free(s1);
   printf("test_valide:)\n\n");
 }
-
+/*
 static void test_shift_right(void){
   printf("%s\n", __func__);
   //test_1
@@ -251,9 +251,9 @@ int main(){
     test_set_empty();
     test_set__is_empty();
     test_set__size();
-    /*test_find();
+    test_find();
     test_set__find();
-    test_shift_right();
+    /*test_shift_right();
     test_shift_left();
     test_set__add();
     test_set__remove();
