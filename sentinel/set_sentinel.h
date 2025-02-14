@@ -10,15 +10,16 @@
 #define SET__BOUND (void *) 0xdeadbeef // sentinel
 #define cannary (void *) 0xeeee
 
-struct cursor{
+/*struct cursor{
   int* a;
-};
+};*/
 struct set {
   void* s[SET__SIZE];
   int (*cmp)(const void*,const void *);
   void* (*copy)(void const*);
   void (*del)(void*);
-  struct cursor* c;
+  //struct cursor* c;
+  void* a;
 };
 
 

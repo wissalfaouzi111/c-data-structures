@@ -198,8 +198,7 @@ void* cursor_next(struct set* se,void* c){
         return NULL;
     }
     else{
-        size_t idx=find(se->s,c,se->cmp);
-        se->c=se->s[idx+1];
+        se->c=c++;
         return  se->c;
     }
 }
@@ -217,4 +216,13 @@ void* cursor_end(struct set* se){
 
 int curseur_data(void* a){
     return *((int*)a);
+}
+
+struct set * set__filter(struct set const * se, int (*filter)(void*),struct cursor* c){
+    struct set * filtered = set__empty(se->cmp,se->copy,se->del);
+    /*for (int i = 0; i < INT_MAX; ++i)
+        if (filter(i) && set__find(se, i))
+            set__add(filtered, i);*/
+    
+    return filtered;
 }
