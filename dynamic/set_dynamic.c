@@ -81,14 +81,14 @@ int set__add(struct set *se, void* c){
     if (set__is_empty(se)){
         se->capacity++;
         se->size++;
-        se->s=malloc(se->capacity *sizeof(int));
+        se->s=malloc(se->capacity *sizeof(void *));
         void* p=se->copy(c);
         se->s[0]=p;
         return 0;
     }
     if (se->capacity == se->size){
         se->capacity*=2;
-        se->s=realloc(se->s,se->capacity * sizeof(int));   
+        se->s=realloc(se->s,se->capacity * sizeof(void *));   
     }
     size_t idx=find(se->s,se->size,c,se->cmp);
     shift_right(se->s,idx,se->size);
@@ -121,7 +121,7 @@ int set__remove(struct set *se, void* c){
         else{
             if ( (se->capacity)/2 >= se->size){
                 se->capacity /=2;
-                se->s=realloc(se->s,se->capacity * sizeof(int));
+                se->s=realloc(se->s,se->capacity * sizeof(void *));
             }
             
             return 0;
