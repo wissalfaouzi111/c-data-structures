@@ -180,3 +180,41 @@ void set__free(struct set* se){
     }
     free(se);
 }
+
+void* cursor_fst(struct set* se){
+    if (set__is_empty(se)){
+        se->c=NULL;
+        return se->c;
+    }
+    else{
+        se->c=se->s[0];
+        return se->c;
+    }
+}
+
+void* cursor_next(struct set* se,void* c){
+    if (set__is_empty(se) || c == SET__BOUND || !set__find(se,c)){
+        se->c=NULL;
+        return NULL;
+    }
+    else{
+        size_t idx=find(se->s,c,se->cmp);
+        se->c=se->s[idx+1];
+        return  se->c;
+    }
+}
+
+void* cursor_end(struct set* se){
+    if (set__is_empty(se)){
+        se->c=NULL;
+        return  NULL;
+    }
+    else{
+        se->c=se->s[SET__SIZE -1];
+        return se->c;
+    }
+}
+
+int curseur_data(void* a){
+    return *((int*)a);
+}

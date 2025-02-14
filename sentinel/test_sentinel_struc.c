@@ -245,7 +245,7 @@ static void test_set__remove_with_shift (void) {
   assert(st->s[0] == SET__BOUND);
   set__free(st); 
   
-  printf("\tOK\n");
+  printf("\tOK\n\n");
   
 }
 int is_even(void* a){
@@ -268,6 +268,42 @@ void test_set_filter(void){
   printf("\tOK\n");
 }*/
 
+static void test_cursor_fst(){
+  printf("%s", __func__);
+  struct set* st=set__empty(cmp_int,copy_int,del_int);
+  int v[4]={1,2,3,4};
+  for (int i=0;i<4;i++){
+    assert(set__add(st,&v[i])==0);
+  }
+  assert(st->s[0]==cursor_fst(st));
+  printf("\tOK\n\n");
+}
+
+static void test_cursor_next(){
+  printf("%s", __func__);
+  struct set* st=set__empty(cmp_int,copy_int,del_int);
+  int v[4]={1,2,3,4};
+  
+  assert(NULL==cursor_next(st,&v[0]));
+  
+  for (int i=0;i<4;i++){
+    assert(set__add(st,&v[i])==0);
+  }
+  
+  assert(st->s[2]==cursor_next(st,&v[1]));
+  assert(SET__BOUND==cursor_next(st,&v[3]));
+  assert(NULL==cursor_next(st,&v[4]));
+  printf("\tOK\n\n");
+}
+
+static void test_cursor_end(){
+  printf("%s", __func__);
+  struct set* st=set__empty(cmp_int,copy_int,del_int);
+  int v[4]={1,2,3,4};
+  for (int i=0;i<4;i++){
+    assert(set__add(st,&v[i])==0);
+  }
+}
 int main () {
   printf("%s\n", __FILE__);
   test_set__print();
@@ -282,8 +318,8 @@ int main () {
   test_set__remove();
 
   test_set__remove_with_shift();
-  
-  
+  test_cursor_fst();
+  test_cursor_next();
   
   //test_set_filter();
   return 0;

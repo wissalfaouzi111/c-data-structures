@@ -5,6 +5,8 @@
 
 struct set;
 
+struct cursor;
+
 // Return a struct set representing the empty set
 struct set *set__empty(int (*cmp)(const void*, const void*),
                         void * (*copy)(void const *),
@@ -37,4 +39,10 @@ void set__free(struct set* se);
 void set__print(const struct set * se, void (*print)(void *));
 
 struct set * set__filter(const struct set * s, int (*p)(void*));
+
+void* cursor_fst(struct set* se);
+void* cursor_next(struct set* se,void* a);
+void* cursor_end(struct set* se);
+int curseur_data(void* a);
+
 #endif // __SET_H__

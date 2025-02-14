@@ -10,12 +10,17 @@
 #define SET__BOUND (void *) 0xdeadbeef // sentinel
 #define cannary (void *) 0xeeee
 
+struct cursor{
+  int* a;
+};
 struct set {
   void* s[SET__SIZE];
   int (*cmp)(const void*,const void *);
   void* (*copy)(void const*);
   void (*del)(void*);
+  struct cursor* c;
 };
+
 
 #include "set.h"
 
@@ -31,7 +36,6 @@ void shift_right(void* s[], size_t begin);
 // moves all elements in s starting from position begin and up to
 // SET__BOUND included, one position to the left. 
 void shift_left(void* s[], size_t begin);
-
 
 
 #endif //__SET_SENTINEL_H__
