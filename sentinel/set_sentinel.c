@@ -218,11 +218,11 @@ int curseur_data(void* a){
     return *((int*)a);
 }
 
-struct set * set__filter(struct set const * se, int (*filter)(void*),struct cursor* c){
+/*struct set * set__filter(struct set const * se, int (*filter)(void*),struct cursor* c){
     struct set * filtered = set__empty(se->cmp,se->copy,se->del);
-    /*for (int i = 0; i < INT_MAX; ++i)
+    for (int i = 0; i < INT_MAX; ++i)
         if (filter(i) && set__find(se, i))
-            set__add(filtered, i);*/
+            set__add(filtered, i);
     
     return filtered;
-}
+}*/

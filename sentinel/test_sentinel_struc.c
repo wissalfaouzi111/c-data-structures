@@ -295,7 +295,7 @@ static void test_cursor_next(){
   assert(NULL==cursor_next(st,&v[4]));
   printf("\tOK\n\n");
 }
-
+/*
 static void test_cursor_end(){
   printf("%s", __func__);
   struct set* st=set__empty(cmp_int,copy_int,del_int);
@@ -303,7 +303,7 @@ static void test_cursor_end(){
   for (int i=0;i<4;i++){
     assert(set__add(st,&v[i])==0);
   }
-}
+}*/
 int main () {
   printf("%s\n", __FILE__);
   test_set__print();
